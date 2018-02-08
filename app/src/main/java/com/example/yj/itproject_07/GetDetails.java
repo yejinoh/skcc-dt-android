@@ -1,104 +1,32 @@
 package com.example.yj.itproject_07;
 
-import android.util.Log;
+import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
- * Created by YJ on 2018-02-07.
+ * Created by YJ on 2018-02-08.
  */
 
-public class VisualRecognition {
-    private String filepath = new String();
-    private String vr_response = new String();
-    private String recommend = new String();
+public class GetDetails {
 
-    public VisualRecognition(String filepath){
-        this.filepath = filepath;
-    }
-
-    public void RunVR(){
-
+    public void GetPhoneDetail(String name){
         final OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/detect_faces").newBuilder();
-        urlBuilder.addQueryParameter("api_key", "8245a9e42ce50c65d949cfd0fa06f1c1d58804e8");
-        urlBuilder.addQueryParameter("version","2016-05-20");
-        String url = urlBuilder.build().toString();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://169.56.93.18:8080/get/detail/phone").newBuilder();
+        urlBuilder.addQueryParameter("name",name);
 
-        File file = new File(this.filepath);
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        if(file.exists()) {
-            final MediaType MEDIA_TYPE = MediaType.parse("image/jpg");
-            builder.addFormDataPart("F",file.getName(), RequestBody.create(MEDIA_TYPE,file));
-            System.out.println(filepath);
-        }
-        else {
-            System.out.println("file not exist");
-        }
-        final RequestBody requestBody = builder.build();
+        String url = urlBuilder.build().toString();
 
         final Request request = new Request.Builder()
                 .url(url)
-                .post(requestBody)
-                .build();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = client.newCall(request).execute();
-                    Log.d("", response.body().string());
-
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            if (!response.isSuccessful()) {
-                                throw new IOException("Unexpected code " + response);
-
-                            } else {
-                                vr_response = response.body().string();
-                                //Log.d("", responseData);
-                                //System.out.println(vr_response);
-                                postToServer("http://169.56.93.18:8080/recommand",vr_response);
-                            }
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }).start();
-    }
-
-    private void postToServer(String ServerURL, final String vrResponse) throws IOException {
-
-        final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        final OkHttpClient client = new OkHttpClient();
-        System.out.println(vr_response);
-
-        RequestBody body = RequestBody.create(JSON, vrResponse);
-        final Request request = new Request.Builder()
-                .url(ServerURL)
-                .post(body)
                 .build();
 
         new Thread(new Runnable() {
@@ -120,11 +48,62 @@ public class VisualRecognition {
                                 throw new IOException("Unexpected code " + response);
                             } else {
                                 final String responseData = response.body().string();
-                                recommend = responseData;
-                                System.out.println(recommend);
-                                MainActivity.recommends = recommend;
-                                ((CameraActivity)CameraActivity.mContext).turn();
+                                //MainActivity.phone_details = responseData;
+                                System.out.println(responseData);
+                            }
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
+        }).start();
+    }
+
+    public void GetPlanDetail(String name){
+        final OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://169.56.93.18:8080/get/detail/plan").newBuilder();
+        urlBuilder.addQueryParameter("name",name);
+
+        String url = urlBuilder.build().toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Response response = client.newCall(request).execute();
+                    //Log.d("", response.body().string());
+
+                    client.newCall(request).enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        @Override
+                        public void onResponse(Call call, final Response response) throws IOException {
+                            if (!response.isSuccessful()) {
+                                throw new IOException("Unexpected code " + response);
+                            } else {
+                                final String responseData = response.body().string();
+
+                                try{
+                                    JSONObject obj = new JSONObject(responseData);
+                                    JSONObject data = obj.getJSONObject("data");
+                                    //System.out.println("obj test :: " + data.getString("name"));
+                                    //MainActivity.plan_details.add(data);
+
+
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                                //System.out.println(responseData);
                             }
                         }
                     });

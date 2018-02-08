@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#CC383231"
+    android:background="#50FFFFFF"
     android:padding="10dp">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="요금제 이름"
         android:textSize="60dp"
-        android:textColor="#CCFFFFFF"/>
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/textViewPlanCost"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="요금제 요금"
         android:textSize="40dp"
-        android:textColor="#CCE4DBD1"
+        android:textColor="#CC383231"
         android:layout_below="@id/textViewPlanName"/>
 
     <RelativeLayout
@@ -36,7 +36,7 @@
             android:id="@+id/imageViewPlanData"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/plan_data"/>
+            android:src="@drawable/plan_data_red"/>
 
         <TextView
             android:id="@+id/textViewPlanData"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageViewPlanData"
             android:text=" 20GB"
-            android:textColor="#FFFFFF"
+            android:textColor="#CC383231"
             android:textSize="30dp"/>
     </RelativeLayout>
 
@@ -60,7 +60,7 @@
             android:id="@+id/imageViewPlanCall"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/plan_call"/>
+            android:src="@drawable/plan_call_green"/>
 
         <TextView
             android:id="@+id/textViewPlanCall"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageViewPlanCall"
             android:text=" 무제한"
-            android:textColor="#FFFFFF"
+            android:textColor="#CC383231"
             android:textSize="30dp"/>
     </RelativeLayout>
 
@@ -84,7 +84,7 @@
             android:id="@+id/imageViewPlanSms"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/plan_sms"/>
+            android:src="@drawable/plan_sms_yello"/>
 
         <TextView
             android:id="@+id/textViewPlanSms"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imageViewPlanSms"
             android:text=" 기본제공"
-            android:textColor="#FFFFFF"
+            android:textColor="#CC383231"
             android:textSize="30dp"/>
     </RelativeLayout>
 

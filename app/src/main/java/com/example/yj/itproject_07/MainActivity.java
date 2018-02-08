@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     public ImageView chatView;
     public RelativeLayout chat;
+
+    public static String recommends;
+    public static ArrayList<JSONObject> phone_details = new ArrayList<JSONObject>();
+    public static ArrayList<JSONObject> plan_details = new ArrayList<JSONObject>();
+
+    public JSONArray phone;
+    public JSONArray plan;
 
     List<Integer> listImages = new ArrayList<>();
     List<String> listPlanNames = new ArrayList<>();
@@ -38,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         chatView = findViewById(R.id.chatview);
         chatView.setVisibility(View.INVISIBLE);
+
+        //Toast.makeText(getApplicationContext(), recommends, Toast.LENGTH_LONG).show();
+        this.parseRecommends();
+
+        //System.out.println("teste!!!!! : "+this.GetDetailPlan(0,"name"));
 
         final View mainview = findViewById(R.id.mainview);
         fab = findViewById(R.id.fab);
@@ -128,6 +143,45 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private String GetDetailPlan(int index, String name){
+        String out = new String();
+        try{
+            out = plan_details.get(index).getString(name);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    private void parseRecommends(){
+        plan_details.clear();
+        phone_details.clear();
+
+        try
+        {
+            JSONObject obj = new JSONObject(recommends);
+            JSONObject data = obj.getJSONObject("data");
+            phone = data.getJSONArray("phone");
+            plan = data.getJSONArray("plan");
+
+            System.out.println(plan);
+            System.out.println(phone);
+
+            try{
+                //new GetDetails().GetPhoneDetail(phone.getString(0));
+                for(int i=0;i<3;i++){
+                    new GetDetails().GetPlanDetail(plan.getString(i));
+                }
+                //System.out.println("size :: " + plan_details.size());
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private void initData(){
         // 핸드폰 사진 추가하기 위해서 Drawable의 사진 파일 불러옴.

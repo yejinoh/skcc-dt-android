@@ -25,7 +25,6 @@
             android:id="@+id/chatview"
             android:layout_width="450dp"
             android:layout_height="150dp"
-
             android:layout_alignBottom="@+id/horizontal_cycle_plan"
             android:layout_alignEnd="@+id/horizontal_cycle_phone"
             android:background="@drawable/chat3" />

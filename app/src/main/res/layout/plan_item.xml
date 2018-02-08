@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#CC383231"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/textViewPlanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요금제 이름"
+        android:textSize="60dp"
+        android:textColor="#CCFFFFFF"/>
+
+    <TextView
+        android:id="@+id/textViewPlanCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="요금제 요금"
+        android:textSize="40dp"
+        android:textColor="#CCE4DBD1"
+        android:layout_below="@id/textViewPlanName"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutPlanData"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_below="@id/textViewPlanName">
+
+        <ImageView
+            android:id="@+id/imageViewPlanData"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/plan_data"/>
+
+        <TextView
+            android:id="@+id/textViewPlanData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageViewPlanData"
+            android:text=" 20GB"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutPlanCall"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/relativeLayoutPlanData"
+        android:layout_marginBottom="4dp">
+
+        <ImageView
+            android:id="@+id/imageViewPlanCall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/plan_call"/>
+
+        <TextView
+            android:id="@+id/textViewPlanCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageViewPlanCall"
+            android:text=" 무제한"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutPlanSms"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/relativeLayoutPlanCall"
+        android:layout_marginBottom="4dp">
+
+        <ImageView
+            android:id="@+id/imageViewPlanSms"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/plan_sms"/>
+
+        <TextView
+            android:id="@+id/textViewPlanSms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageViewPlanSms"
+            android:text=" 기본제공"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

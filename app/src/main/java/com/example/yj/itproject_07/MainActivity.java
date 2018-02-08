@@ -98,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//Toast.makeText(getApplicationContext(), state+"onPageScrollStateChanged", Toast.LENGTH_LONG).show();
-
+                 //Toast.makeText(getApplicationContext(), state+"onPageScrollStateChanged", Toast.LENGTH_LONG).show();
                 Log.d("DT","onPageScrollStateChanged : "+state);
             }
         });

@@ -8,56 +8,218 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.yj.itproject_07.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/mainview"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#CC383231">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageViewBackground"
+        <RelativeLayout
+            android:id="@+id/mainview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageViewBackground"
+                android:layout_width="match_parent"
+                android:layout_height="1400dp"
+                android:background="@drawable/bg_galaxy_s8" />
+
+            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                android:id="@+id/horizontal_cycle_phone"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                app:icvp_max_page_scale="0.8"
+                app:icvp_medium_scaled="false"
+                app:icvp_min_page_scale="0.55"
+                app:icvp_min_page_scale_offset="5dp"
+                app:icvp_scroll_duration="250" />
+
+            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                android:id="@+id/horizontal_cycle_plan"
+                android:layout_width="520dp"
+                android:layout_height="250dp"
+                android:layout_below="@id/horizontal_cycle_phone"
+                android:layout_centerHorizontal="true"
+                app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                app:icvp_max_page_scale="0.8"
+                app:icvp_medium_scaled="false"
+                app:icvp_min_page_scale="0.55"
+                app:icvp_min_page_scale_offset="5dp"
+                app:icvp_scroll_duration="250" />
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutExpenct"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/round_shape"
+                android:layout_below="@id/horizontal_cycle_plan"
+                android:elevation="10dp">
+
+                <TextView
+                    android:id="@+id/textViewPlanName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="선택하신 기기와 요금제로 계산한 한 달 비용입니다."
+                    android:textSize="18dp"
+                    android:textColor="#77FFFFFF"/>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutCommunicationFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@id/textViewPlanName">
+
+                    <TextView
+                        android:id="@+id/textViewCommunicationFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="통신서비스요금"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewExpectCommunicationFee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textViewCommunicationFee"
+                        android:gravity="right"
+                        android:text=" 44,829원"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutVat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@id/relativeLayoutCommunicationFee">
+
+                    <TextView
+                        android:id="@+id/textViewVat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="부가사용금액"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewExpectVat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textViewVat"
+                        android:gravity="right"
+                        android:text=" 8,961원"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutInstallment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@id/relativeLayoutVat">
+
+                    <TextView
+                        android:id="@+id/textViewInstallment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="단말기할부금"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewExpectInstallment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textViewInstallment"
+                        android:gravity="right"
+                        android:text=" 47,680원"
+                        android:textColor="#FFFFFF"
+                        android:textSize="30dp"/>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutTotalFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_below="@id/relativeLayoutInstallment">
+
+                    <TextView
+                        android:id="@+id/textViewTotalFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="총 합계"
+                        android:textColor="#CCE4DBD1"
+                        android:textSize="40dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewExpectTotalFee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textViewTotalFee"
+                        android:gravity="right"
+                        android:text="101,470원"
+                        android:textSize="40dp"
+                        android:textColor="#CCE4DBD1"/>
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <!-- 개통 버튼 -->
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/relativeLayoutExpenct"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@android:color/darker_gray"
+                android:id="@+id/po_image2"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="@android:color/holo_red_dark"
+                app:allow_random_color="false"
+                app:siShape="@raw/heart"/>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+
+    <!-- chatbot -->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutChat"
+        android:layout_width="450dp"
+        android:layout_height="150dp"
+        android:background="@drawable/round_chat"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        app:backgroundTint="#ff7a2c">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_galaxy_s8" />
-
-
-        <ImageView
-            android:id="@+id/chatview"
-            android:layout_width="450dp"
-            android:layout_height="150dp"
-
-            android:layout_alignBottom="@+id/horizontal_cycle_plan"
-            android:layout_alignEnd="@+id/horizontal_cycle_phone"
-            android:background="@drawable/chat3" />
-
-        <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-            android:id="@+id/horizontal_cycle_phone"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-            app:icvp_max_page_scale="0.8"
-            app:icvp_medium_scaled="false"
-            app:icvp_min_page_scale="0.55"
-            app:icvp_min_page_scale_offset="5dp"
-            app:icvp_scroll_duration="250" />
-
-        <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-            android:id="@+id/horizontal_cycle_plan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/horizontal_cycle_phone"
-            app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-            app:icvp_max_page_scale="0.8"
-            app:icvp_medium_scaled="false"
-            app:icvp_min_page_scale="0.55"
-            app:icvp_min_page_scale_offset="5dp"
-            app:icvp_scroll_duration="250" >
-
-        </com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager>
-
-
+            android:text="안녕하세요. DT에 오신 것을 환영합니다."
+            android:layout_margin="10dp"
+            android:textSize="30dp"
+            android:textColor="#CCFFFFFF"/>
     </RelativeLayout>
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.yj.itproject_07;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
@@ -9,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +26,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     boolean check = false;
     private FloatingActionButton fab;
-    public ImageView chatView;
-    public RelativeLayout chat;
+
+    public RelativeLayout relativeLayoutChat;
 
     List<Integer> listImages = new ArrayList<>();
     List<String> listPlanNames = new ArrayList<>();
@@ -36,10 +39,16 @@ public class MainActivity extends AppCompatActivity {
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.activity_main);
 
-        chatView = findViewById(R.id.chatview);
-        chatView.setVisibility(View.INVISIBLE);
 
-        final View mainview = findViewById(R.id.mainview);
+        //button
+        //ShineButton shineButton = (ShineButton) findViewById(R.id.shine_button);
+        //shineButton.init(activity);
+
+
+        relativeLayoutChat = findViewById(R.id.relativeLayoutChat);
+        relativeLayoutChat.setVisibility(View.INVISIBLE);
+
+        //final View mainview = findViewById(R.id.mainview);
         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 if(!check)
                 {
                     Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_LONG).show();
-                    chatView.setVisibility(View.VISIBLE);
+                    relativeLayoutChat.setVisibility(View.VISIBLE);
                     check = true;
                 }
                 else if(check){
 
                     Toast.makeText(getApplicationContext(), "unclick", Toast.LENGTH_LONG).show();
-                    chatView.setVisibility(View.GONE);
+                    relativeLayoutChat.setVisibility(View.GONE);
                     check = false;
                 }
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

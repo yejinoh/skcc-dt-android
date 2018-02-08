@@ -37,6 +37,7 @@ public class CameraActivity extends AppCompatActivity {
     private boolean check = false;
     private CameraSurfacePreview surfaceView;
     private String path;
+    public static Context mContext;
 
     @Override
     protected void onResume(){
@@ -54,6 +55,7 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.camera);
         requestPermission();
@@ -134,18 +136,15 @@ public class CameraActivity extends AppCompatActivity {
             public void onPictureTaken(byte[] bytes) {
                 new SaveImage().execute(bytes);
 
-                Intent i = new Intent(CameraActivity.this, MainActivity.class);
-
-                startActivity(i);
-
-                //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
-                VisualRecognition vr = new VisualRecognition(path);
-                vr.RunVR();
-
-                finish();
-
             }
         });
+    }
+
+    public void turn(){
+        Intent i = new Intent(CameraActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
+        //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
     }
 
 
@@ -169,6 +168,8 @@ public class CameraActivity extends AppCompatActivity {
                 outStream.close();
 
                 path = new String(sdCard.getAbsolutePath() + "/SK_CNC/" + fileName);
+                VisualRecognition vr = new VisualRecognition(path);
+                vr.RunVR();
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 mediaScanIntent.setData(Uri.fromFile(outFile));

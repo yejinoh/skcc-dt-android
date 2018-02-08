@@ -13,6 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -39,6 +42,8 @@ public class CameraActivity extends AppCompatActivity {
     private String path;
     public static Context mContext;
 
+    private boolean isAccept = false;
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -58,6 +63,8 @@ public class CameraActivity extends AppCompatActivity {
         mContext = this;
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.camera);
+
+
         requestPermission();
         mPreview = findViewById(R.id.preview_camera);
         cameraOverlay = findViewById(R.id.faceOverlay_camera);
@@ -66,6 +73,32 @@ public class CameraActivity extends AppCompatActivity {
         {
             createCameraSource();
         }
+
+        RelativeLayout buttonAccept=(RelativeLayout)findViewById(R.id.relativeLayoutAccept);
+        buttonAccept.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "동의", Toast.LENGTH_LONG).show();
+                isAccept = true;
+                // 얼굴인식 코드 시작
+
+            }
+        });
+
+        RelativeLayout buttonDeny=(RelativeLayout)findViewById(R.id.relativeLayoutDeny);
+        buttonDeny.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "싫어", Toast.LENGTH_LONG).show();
+
+                Intent i = new Intent(CameraActivity.this, HomeActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+
+
     }
 
     private void createCameraSource(){
@@ -120,11 +153,12 @@ public class CameraActivity extends AppCompatActivity {
         private CameraOverlay mOverlay;
 
         GraphicFaceTracker(CameraOverlay overlay) {
-            mOverlay = overlay;
+            //mOverlay = overlay;
         }
         @Override
         public void onNewItem(int faceId, Face item) {
-            if(check) return;
+            if(check || !isAccept) return;
+            mOverlay = cameraOverlay;
             takePicture();
             check = true;
         }

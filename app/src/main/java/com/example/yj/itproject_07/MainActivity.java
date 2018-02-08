@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void initData(){
         // 핸드폰 사진 추가하기 위해서 Drawable의 사진 파일 불러옴.
         listImages.add(R.drawable.iphone_10);

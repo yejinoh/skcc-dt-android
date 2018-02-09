@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeWhole"
+        android:layout_width="420dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#CC8c8c8c">
+
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutComplete"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:paddingLeft="60dp"
+
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/textViewComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="53dp"
+                android:text="가입이 완료되었습니다.\nSKT 가족이 되신 것을 환영합니다."
+                android:textColor="#efefef"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imageViewComplete"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/skt_join" />
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
+

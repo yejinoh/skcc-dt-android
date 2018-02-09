@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00ffffff">
+    android:background="@color/transparent">
+
+
 
     <RelativeLayout
         android:id="@+id/relativeWhole"
@@ -34,8 +36,9 @@
             android:layout_height="48dp"
             android:layout_below="@id/relativeLayoutPhoneNameTitle"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
 
             <TextView
                 android:id="@+id/textViewPhoneNameReal"
@@ -71,9 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@id/relativeLayoutPhoneComapanyTitle"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:onClick="onClick">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:onClick="onClick"
+            android:background="#FFFFFF">
 
             <TextView
                 android:id="@+id/textViewPhoneComapanyReal"
@@ -109,9 +113,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_below="@id/relativeLayoutPhoneStorageTitle"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:onClick="onClick">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:onClick="onClick"
+            android:background="#FFFFFF">
 
             <TextView
                 android:id="@+id/textViewPhoneStorageReal"
@@ -147,10 +152,12 @@
             android:layout_height="48dp"
             android:layout_below="@id/relativeLayoutPhoneColorTitle"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
 
-            <TextView
+
+        <TextView
                 android:id="@+id/textViewPhoneColorReal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,10 +192,12 @@
             android:layout_height="48dp"
             android:layout_below="@id/relativeLayoutPhonePriceTitle"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
 
-            <TextView
+
+        <TextView
                 android:id="@+id/textViewPhonePriceReal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

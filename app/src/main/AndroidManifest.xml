@@ -26,7 +26,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity android:name=".MainActivity"
@@ -39,8 +38,12 @@
 
         <activity android:name=".DetailActivity"
             android:theme="@style/Theme.Transparent">
-
         </activity>
+
+        <activity android:name=".JoinCompleteActivity"
+            android:theme="@style/Theme.Transparent">
+        </activity>
+
     </application>
 
 </manifest>

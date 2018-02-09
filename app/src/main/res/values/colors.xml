@@ -7,4 +7,14 @@
     <color name="fabPressed">#6EB5F7</color>
     <color name="fabRipple">#AED6FC</color>
 
+
+    <item name = "violet" type="color">#d2bfca</item>
+    <item name = "coral" type="color">#f24455</item>
+    <item name = "light_gray" type="color">#f2f2f2</item>
+    <item name="new_gray" type="color">#efefef</item>
+    <item name = "middle_gray" type="color">#8c8c8c</item>
+    <item name = "heavy_gray" type="color">#0f0f0f</item>
+    <item name = "transparent" type="color">#00000000</item>
+    <item name="light_yellow" type="color">#fffab5</item>
+
 </resources>

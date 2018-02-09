@@ -33,6 +33,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.*;
 import com.ibm.watson.developer_cloud.conversation.v1.model.InputData;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
+import com.ibm.watson.developer_cloud.http.ServiceCallback;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.RecognizeOptions;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechResults;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private String sttText = new String();
 
     public boolean flag = false;
-    public boolean flag_2 = false;
     public String chatbotMessage = new String();
     public TextToSpeech tts;
 
@@ -301,18 +301,28 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         new Thread(new Runnable() {
             @Override
             public void run() {
-                MessageResponse response = service.message(options).execute();
-                try {
-                    JSONObject ConversationResult = new JSONObject(response);
-                    JSONObject output = ConversationResult.getJSONObject("output");
-                    String outString = output.getString("text");
-                    chatbotMessage = outString.substring(2,outString.length()-2);
-                    System.out.println(chatbotMessage);
-                    flag = true;
+                service.message(options).enqueue(new ServiceCallback<MessageResponse>() {
+                    @Override
+                    public void onResponse(MessageResponse response) {
+                        try{
+                            JSONObject ConversationResult = new JSONObject(response);
+                            JSONObject output = ConversationResult.getJSONObject("output");
+                            String outString = output.getString("text");
+                            chatbotMessage = outString.substring(2, outString.length() - 2);
+                            System.out.println(chatbotMessage);
+                            System.out.println(response);
+                            speakOut();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onFailure(Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
             }
         }).start();
     }
@@ -345,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private void speakOut() {
         registerReceiver(m_br, filter);
         tts.speak(chatbotMessage, TextToSpeech.QUEUE_FLUSH, null, null);
-        System.out.println("SPEAK !! ~~");
+        System.out.println("Response of : " + sttText);
     }
 
     @Override
@@ -390,32 +400,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 //sttText = speechResults.getResults().get(0).getAlternatives().get(0).getTranscript();
 
                 sttText = speechResults.getResults().get(0).getAlternatives().get(0).getTranscript();
-                System.out.println(sttText);
+                //System.out.println(sttText);
 
                 if(speechResults.getResults().get(0).isFinal()){
+                    System.out.println("Final Text :: " + sttText);
                     microphoneHelper.closeInputStream();
-                    System.out.println("말 끝남");
-
-                    //chatView.setVisibility(View.GONE);
-
-                    //Toast.makeText(getApplicationContext(), "말 끝났어~", Toast.LENGTH_LONG).show();
-                    //chatView.setVisibility(View.GONE);
                     check = false;
-
-                    System.out.println("들어옴 : " + sttText);
-
                     ConversationRequest();
-
-                    while(true){
-                        if(flag == true) {
-                            System.out.println("chatbot OK");
-                            flag = false;
-                            break;
-                        }
-                    }
-                    speakOut();
                 }
-                //showMicText(text);
             }
         }
 

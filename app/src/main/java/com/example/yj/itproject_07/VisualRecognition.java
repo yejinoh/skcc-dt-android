@@ -33,7 +33,8 @@ public class VisualRecognition {
         final OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://gateway-a.watsonplatform.net/visual-recognition/api/v3/detect_faces").newBuilder();
-        urlBuilder.addQueryParameter("api_key", "8245a9e42ce50c65d949cfd0fa06f1c1d58804e8");
+        //urlBuilder.addQueryParameter("api_key", "8245a9e42ce50c65d949cfd0fa06f1c1d58804e8"); // 지영
+        urlBuilder.addQueryParameter("api_key", "5c8c72a78210e19fe8c8b21b8a8bff6a9e317293"); // 세건
         urlBuilder.addQueryParameter("version","2016-05-20");
         String url = urlBuilder.build().toString();
 
@@ -58,32 +59,25 @@ public class VisualRecognition {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Response response = client.newCall(request).execute();
-                    Log.d("", response.body().string());
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
+                    @Override
+                    public void onResponse(Call call, final Response response) throws IOException {
+                        if (!response.isSuccessful()) {
+                            throw new IOException("Unexpected code " + response);
+
+                        } else {
+                            vr_response = response.body().string();
+                            //Log.d("", responseData);
+                            //System.out.println(vr_response);
+                            postToServer("http://169.56.93.18:8080/recommand",vr_response);
                         }
-
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            if (!response.isSuccessful()) {
-                                throw new IOException("Unexpected code " + response);
-
-                            } else {
-                                vr_response = response.body().string();
-                                //Log.d("", responseData);
-                                //System.out.println(vr_response);
-                                postToServer("http://169.56.93.18:8080/recommand",vr_response);
-                            }
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    }
+                });
             }
 
         }).start();
@@ -95,6 +89,13 @@ public class VisualRecognition {
         final OkHttpClient client = new OkHttpClient();
         System.out.println(vr_response);
 
+        File del = new File(this.filepath);
+        if(del.delete())
+            System.out.println("파일 삭세 성공");
+        else
+            System.out.println("파일 삭제 실패");
+
+
         RequestBody body = RequestBody.create(JSON, vrResponse);
         final Request request = new Request.Builder()
                 .url(ServerURL)
@@ -104,33 +105,26 @@ public class VisualRecognition {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Response response = client.newCall(request).execute();
-                    //Log.d("", response.body().string());
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
 
-                    client.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            e.printStackTrace();
+                    @Override
+                    public void onResponse(Call call, final Response response) throws IOException {
+                        if (!response.isSuccessful()) {
+                            throw new IOException("Unexpected code " + response);
+                        } else {
+                            final String responseData = response.body().string();
+                            recommend = responseData;
+                            System.out.println(recommend);
+                            MainActivity.recommends = recommend;
+                            ((CameraActivity)CameraActivity.mContext).turn();
+
                         }
-
-                        @Override
-                        public void onResponse(Call call, final Response response) throws IOException {
-                            if (!response.isSuccessful()) {
-                                throw new IOException("Unexpected code " + response);
-                            } else {
-                                final String responseData = response.body().string();
-                                recommend = responseData;
-                                System.out.println(recommend);
-                                MainActivity.recommends = recommend;
-                                ((CameraActivity)CameraActivity.mContext).turn();
-
-                            }
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                    }
+                });
             }
 
         }).start();

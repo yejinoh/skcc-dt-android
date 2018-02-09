@@ -5,13 +5,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -45,6 +47,9 @@ public class CameraActivity extends AppCompatActivity {
     private CameraSurfacePreview surfaceView;
     private String path;
     public static Context mContext;
+
+    static int width;
+    static int height;
 
     private boolean isAccept = false;
 
@@ -136,8 +141,15 @@ public class CameraActivity extends AppCompatActivity {
         if(!mFaceDetector.isOperational()){
             Log.e("SSG", "Face detector dependencies are not yet available.");
         }
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
+
         mCameraSource = new CameraSource.Builder(context, mFaceDetector)
                 .setRequestedPreviewSize(640, 480)
+                .setRequestedPreviewSize(width, height)
                 .setFacing(CameraSource.CAMERA_FACING_FRONT)
                 .setRequestedFps(30.0f)
                 .build();
@@ -217,6 +229,7 @@ public class CameraActivity extends AppCompatActivity {
                 dir.mkdirs();
 
                 String fileName = String.format("%d.jpg", System.currentTimeMillis());
+
                 File outFile = new File(dir, fileName);
 
                 outStream = new FileOutputStream(outFile);
@@ -225,6 +238,49 @@ public class CameraActivity extends AppCompatActivity {
                 outStream.close();
 
                 path = new String(sdCard.getAbsolutePath() + "/SK_CNC/" + fileName);
+
+                /*---------------------------------------*/
+                Bitmap srcBmp = BitmapFactory.decodeFile(path);
+
+                int iWidth   = 1366;   // 축소시킬 너비
+                int iHeight  = 768;   // 축소시킬 높이
+                float fWidth  = srcBmp.getWidth();
+                float fHeight = srcBmp.getHeight();
+
+                // 원하는 널이보다 클 경우의 설정
+                if(fWidth > iWidth) {
+                    float mWidth = (float) (fWidth / 100);
+                    float fScale = (float) (iWidth / mWidth);
+                    fWidth *= (fScale / 100);
+                    fHeight *= (fScale / 100);
+
+                // 원하는 높이보다 클 경우의 설정
+                }else if (fHeight > iHeight) {
+                    float mHeight = (float) (fHeight / 100);
+                    float fScale = (float) (iHeight / mHeight);
+                    fWidth *= (fScale / 100);
+                    fHeight *= (fScale / 100);
+                }
+
+                FileOutputStream fosObj = null;
+                try {
+                    // 리사이즈 이미지 동일파일명 덮어 쒸우기 작업
+                    Bitmap resizedBmp = Bitmap.createScaledBitmap(srcBmp, (int)fWidth, (int)fHeight, true);
+                    fosObj = new FileOutputStream(path);
+                    resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, fosObj);
+
+                } catch (Exception e){
+
+                } finally {
+                    fosObj.flush();
+                    fosObj.close();
+                }
+
+                // 저장된 이미지를 스트림으로 불러오기
+                //File pathFile = new File(url);
+                //FileInputStream fisObj = new FileInputStream(pathFile);
+                /*-------------------------------------*/
+
                 VisualRecognition vr = new VisualRecognition(path);
                 vr.RunVR();
 

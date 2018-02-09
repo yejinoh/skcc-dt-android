@@ -2,8 +2,10 @@ package com.example.yj.itproject_07;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.google.android.gms.common.images.Size;
 import com.google.android.gms.vision.CameraSource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CameraSurfacePreview extends ViewGroup  {
     private static final String TAG = "SPACE-CAMERA";
@@ -69,10 +72,11 @@ public class CameraSurfacePreview extends ViewGroup  {
     private void startIfReady() throws IOException {
         if (mStartRequested && mSurfaceAvailable) {
             mCameraSource.start(mSurfaceView.getHolder());
-            if (mOverlay != null) {
+            if (mOverlay != null)
+            {
                 Size size = mCameraSource.getPreviewSize();
-                int min = Math.min(size.getWidth(), size.getHeight());
-                int max = Math.max(size.getWidth(), size.getHeight());
+                int min = Math.min(CameraActivity.width, CameraActivity.width);
+                int max = Math.max(CameraActivity.width, CameraActivity.width);
                 if (isPortraitMode()) {
                     // Swap width and height sizes when in portrait, since it will be rotated by
                     // 90 degrees
@@ -109,8 +113,8 @@ public class CameraSurfacePreview extends ViewGroup  {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+        int width = CameraActivity.height;
+        int height = CameraActivity.width;
         if (mCameraSource != null) {
             Size size = mCameraSource.getPreviewSize();
             if (size != null) {

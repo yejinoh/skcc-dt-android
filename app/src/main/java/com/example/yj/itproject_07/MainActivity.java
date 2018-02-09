@@ -22,15 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
 import com.ibm.watson.developer_cloud.android.library.audio.utils.ContentType;
@@ -340,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
         //Log.d("Comma_output",output);
         return output;
->>>>>>> 90209b38b01af385655dc773012b2d7c606352a2
     }
 
     @Override

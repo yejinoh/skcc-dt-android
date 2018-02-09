@@ -274,7 +274,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         for(int i=0;i<5;i++) {
             if(i<3) {
                 listPlanNames.add(GetRecommendData("plan", i, "name"));
-                listPlanCosts.add("월 " + GetRecommendData("plan", i, "month_pay") + "원");
+                String temp = GetRecommendData("plan", i, "month_pay");
+                String month = "월 " + temp.substring(0,1) + "," + temp.substring(2,4) + "원";
+                listPlanCosts.add(month);
                 listPlanDatas.add(GetRecommendData("plan",i,"data"));
                 listPlanCalls.add(GetRecommendData("plan", i, "call"));
                 listPlanSmss.add(GetRecommendData("plan", i, "sms"));

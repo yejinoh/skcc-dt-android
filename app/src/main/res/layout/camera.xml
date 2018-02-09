@@ -18,63 +18,81 @@
     </com.example.yj.itproject_07.CameraSurfacePreview>
 
     <RelativeLayout
-        android:id="@+id/relativeLayoutIsAccept"
-        android:layout_width="450dp"
-        android:layout_height="150dp"
-        android:background="#383231"
+        android:id="@+id/relativeLayoutPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
-        <TextView
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="안녕하세요. AI 상담사와 함께하는 DT입니다.\n당신만을 위한 기기와 요금제를 추천해드립니다.\n영상 분석에 동의하신다면 '예'를 눌러주세요.\n사진은 상품 추천에만 활용되며 저장되지 않습니다."
-            android:layout_margin="10dp"
-            android:textSize="20dp"
-            android:textColor="#CCFFFFFF"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="450dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutIsAccept"
-        android:layout_centerHorizontal="true">
-
+        <!-- 동의받기 -->
         <RelativeLayout
-            android:id="@+id/relativeLayoutAccept"
-            android:layout_width="225dp"
-            android:layout_height="100dp"
-            android:background="#CC383231">
+            android:id="@+id/relativeLayoutIsAccept"
+            android:layout_width="450dp"
+            android:layout_height="150dp"
+            android:background="#383231">
 
             <TextView
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="예"
-                android:textSize="20dp"
-                android:textColor="#ebf4d7"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayoutDeny"
-            android:layout_width="225dp"
-            android:layout_height="100dp"
-            android:background="#EE383231"
-            android:layout_toRightOf="@id/relativeLayoutAccept">
-
-            <TextView
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="아니오"
+                android:text="안녕하세요. AI 상담사와 함께하는 DT입니다.\n당신만을 위한 기기와 요금제를 추천해드립니다.\n영상 분석에 동의하신다면 '예' 눌러주세요.\n사진은 상품 추천에만 활용되며 저장되지 않습니다."
                 android:layout_margin="10dp"
                 android:textSize="20dp"
-                android:textColor="#889174"/>
+                android:textColor="#CCFFFFFF"/>
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="450dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayoutIsAccept"
+            android:layout_centerHorizontal="true">
 
+            <RelativeLayout
+                android:id="@+id/relativeLayoutAccept"
+                android:layout_width="225dp"
+                android:layout_height="100dp"
+                android:background="#CC383231">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="예"
+                    android:textSize="20dp"
+                    android:textColor="#ebf4d7"/>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/relativeLayoutDeny"
+                android:layout_width="225dp"
+                android:layout_height="100dp"
+                android:background="#EE383231"
+                android:layout_toRightOf="@id/relativeLayoutAccept">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="아니오"
+                    android:layout_margin="10dp"
+                    android:textSize="20dp"
+                    android:textColor="#889174"/>
+            </RelativeLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/imageViewLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

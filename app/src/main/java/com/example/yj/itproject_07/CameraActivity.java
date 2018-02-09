@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,9 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.CameraSource;
@@ -44,6 +48,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private boolean isAccept = false;
 
+    private ImageView imageViewLoading;
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -65,6 +71,13 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.camera);
 
 
+        imageViewLoading = (ImageView) findViewById(R.id.imageViewLoading);
+        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(imageViewLoading);
+        Glide.with(this).load(R.drawable.loading_red).into(gifImage);
+        imageViewLoading.setVisibility(View.INVISIBLE);
+
+
+
         requestPermission();
         mPreview = findViewById(R.id.preview_camera);
         cameraOverlay = findViewById(R.id.faceOverlay_camera);
@@ -80,7 +93,13 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "동의", Toast.LENGTH_LONG).show();
                 isAccept = true;
-                // 얼굴인식 코드 시작
+
+                // 사진 촬영 동의 누를 경우 사라진다.
+                RelativeLayout relativeLayoutPermission=(RelativeLayout)findViewById(R.id.relativeLayoutPermission);
+                relativeLayoutPermission.setVisibility(View.INVISIBLE);
+
+                // 얼굴인식 시작(3,2,1)
+
 
             }
         });
@@ -169,6 +188,9 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onPictureTaken(byte[] bytes) {
                 new SaveImage().execute(bytes);
+
+                // 로딩 돌아가기 시작
+                imageViewLoading.setVisibility(View.VISIBLE);
 
             }
         });

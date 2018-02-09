@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         for(int i=0;i<5;i++) {
             if(i<3) {
                 listPlanNames.add(GetRecommendData("plan", i, "name"));
-                listPlanCosts.add(GetRecommendData("plan", i, "month_pay"));
+                listPlanCosts.add("월 " + GetRecommendData("plan", i, "month_pay") + "원");
                 listPlanDatas.add(GetRecommendData("plan",i,"data"));
                 listPlanCalls.add(GetRecommendData("plan", i, "call"));
                 listPlanSmss.add(GetRecommendData("plan", i, "sms"));
@@ -288,8 +288,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Chatbot Part
         final Conversation service = new Conversation(Conversation.VERSION_DATE_2017_05_26);
         service.setEndPoint("https://gateway.aibril-watson.kr/conversation/api");
+        //service.setUsernameAndPassword("117c0fbf-c09c-4c86-8003-23c10b87b407","AUvnd2olbbAB" ); //지영
         service.setUsernameAndPassword("ec82b488-382f-4e57-9029-4cf518331c58", "RpG2PAivzMmh");
 
+        //String workspaceId = "e880c113-1ccc-4c1e-aee7-423ed65923ff"; // 지영
         String workspaceId = "122eb3c2-66eb-4307-9a28-b096a18f46ae";
 
         InputData input = new InputData.Builder(sttText).build();

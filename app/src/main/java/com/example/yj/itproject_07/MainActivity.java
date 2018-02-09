@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -67,6 +68,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     List<String> listPlanCalls = new ArrayList<>();
     List<String> listPlanSmss = new ArrayList<>();
 
+    private TextView comFee;
+    private TextView insFee;
+    private TextView totalFee;
+
+    public static int phonePosition = 0;
+    public static int planPosition = 0;
+
     // IntentFilter 객체를 생성한다.
     IntentFilter filter = new IntentFilter();
     // TTS의 음성출력의 완료되는 동작에 대한 알림를 수신하기위해
@@ -83,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             // TTS의 음성출력이 완료되어 알림이 수신된 경우
             if(act.equals(TextToSpeech.ACTION_TTS_QUEUE_PROCESSING_COMPLETED)) {
-
                 // 토스트 메시지를 통해 TTS 의 음성출력이 완료되었음을 사용자에게 알린다.
                 Toast.makeText( getApplicationContext() , "TTS 음성 출력 완료", Toast.LENGTH_SHORT ).show();
                 chatView.setVisibility(View.GONE);
@@ -96,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.activity_main);
+
+        // textViewExpectCommunicationFee 통신 서비스
+        // textViewExpectInstallment 월 할부금
+        // textViewExpectTotalFee 토탈
+        comFee = findViewById(R.id.textViewExpectCommunicationFee);
+        insFee = findViewById(R.id.textViewExpectInstallment);
+        totalFee = findViewById(R.id.textViewExpectTotalFee);
 
         tts = new TextToSpeech(this, this);
         microphoneHelper = new MicrophoneHelper(this);
@@ -118,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void onClick(View view) {
                 if(!check)
                 {
+                    //sttText = "말씀해 주세요.";
+                    //speakOut();
+
                     Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_LONG).show();
                     chatView.setVisibility(View.VISIBLE);
                     check = true;
@@ -140,25 +157,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 else if(check){
 
                     microphoneHelper.closeInputStream();
-                    /*
-                    ConversationRequest();
-
-                    while(true){
-                        if(flag == true) {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    System.out.println("chatbot OK");
-                    speakOut();
-                    */
-                    //Toast.makeText(getApplicationContext(), "unclick", Toast.LENGTH_LONG).show();
                     chatView.setVisibility(View.GONE);
                     check = false;
                 }
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //       .setAction("Action", null).show();
-
             }
         });
 
@@ -168,15 +169,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         ImageAdapter adapter = new ImageAdapter(listImages, getBaseContext());
         pagerPhone.setAdapter(adapter);
 
-        HorizontalInfiniteCycleViewPager pagerPlan = (HorizontalInfiniteCycleViewPager) findViewById(R.id.horizontal_cycle_plan);
-        PlanAdapter adapterPlan = new PlanAdapter(listPlanNames, listPlanCosts, getBaseContext());
-        pagerPlan.setAdapter(adapterPlan);
-
         pagerPhone.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ImageView imageViewBackground = (ImageView) findViewById(R.id.imageViewBackground);
-                switch (position%3) {
+                switch (position % 3) {
                     case 0:
                         imageViewBackground.setBackgroundResource(R.drawable.bg_iphone_10);
                         break;
@@ -188,21 +185,86 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         break;
                 }
 
-                Log.d("DT","onPageScrolled : "+position);
+                //Log.d("DT","onPageScrolled : " + Integer.toString(position % 3));
+                phonePosition = (position % 3);
+                SetTotal();
+
             }
 
             @Override
             public void onPageSelected(int position) {
-                Log.d("DT","onPageSelected : "+position);
+                //Log.d("DT","onPageSelected : "+position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 //Toast.makeText(getApplicationContext(), state+"onPageScrollStateChanged", Toast.LENGTH_LONG).show();
-                Log.d("DT","onPageScrollStateChanged : "+state);
+                //Log.d("DT","onPageScrollStateChanged : "+state);
             }
         });
 
+        HorizontalInfiniteCycleViewPager pagerPlan = (HorizontalInfiniteCycleViewPager) findViewById(R.id.horizontal_cycle_plan);
+        PlanAdapter adapterPlan = new PlanAdapter(listPlanNames, listPlanCosts, getBaseContext());
+        pagerPlan.setAdapter(adapterPlan);
+        pagerPlan.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                //Log.d("Now Communication fee", Integer.toString(position % 3));
+                planPosition = (position % 3);
+                SetTotal();
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //Log.d("Plan Select :: ","onPageSelected : " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                //Toast.makeText(getApplicationContext(), state+"onPageScrollStateChanged", Toast.LENGTH_LONG).show();
+                //Log.d("DT","onPageScrollStateChanged : " + state);
+            }
+        });
+
+    }
+
+    private void SetTotal(){
+        String pricePhone = Integer.toString((Integer.parseInt(GetRecommendData("phone",phonePosition,"price").split(",")[0]) / 24));
+        String pricePlan = GetRecommendData("plan",planPosition,"month_pay");
+
+        String priceTotal = Integer.toString((Integer.parseInt(pricePhone) + Integer.parseInt(pricePlan)));
+
+        comFee.setText(AddComma(pricePlan));
+        insFee.setText(AddComma(pricePhone));
+        totalFee.setText(AddComma(priceTotal));
+
+    }
+
+    private String AddComma(String input){
+        String output = new String();
+
+        int end = input.length();
+        int start = end - 3;
+
+        while(true){
+            if((end - 3) < 0){
+                output = input.substring(0,end) + output;
+                break;
+            }
+            if(start == 0) {
+                output = input.substring(start, end) + output;
+            }
+            else{
+                output = "," + input.substring(start, end) + output;
+            }
+            //System.out.println(input + " :: " + output);
+            end -= 3;
+            start -= 3;
+        }
+        //Log.d("Comma_output",output);
+        return output;
     }
 
     @Override
@@ -275,7 +337,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             if(i<3) {
                 listPlanNames.add(GetRecommendData("plan", i, "name"));
                 String temp = GetRecommendData("plan", i, "month_pay");
-                String month = "월 " + temp.substring(0,1) + "," + temp.substring(2,4) + "원";
+                System.out.println(temp);
+                String month = "월 " + temp.substring(0,2) + "," + temp.substring(2,5) + "원";
                 listPlanCosts.add(month);
                 listPlanDatas.add(GetRecommendData("plan",i,"data"));
                 listPlanCalls.add(GetRecommendData("plan", i, "call"));
@@ -314,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             String outString = output.getString("text");
                             chatbotMessage = outString.substring(2, outString.length() - 2);
                             System.out.println(chatbotMessage);
-                            System.out.println(response);
+                            //System.out.println(response);
                             speakOut();
                         }catch (Exception e){
                             e.printStackTrace();
@@ -399,7 +462,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         @Override
         public void onTranscription(SpeechResults speechResults) {
-            System.out.println(speechResults);
+            //System.out.println(speechResults);
             if (speechResults.getResults() != null && !speechResults.getResults().isEmpty()) {
                 //sttText = speechResults.getResults().get(0).getAlternatives().get(0).getTranscript();
 
@@ -407,6 +470,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 //System.out.println(sttText);
 
                 if(speechResults.getResults().get(0).isFinal()){
+                    if(sttText.contains("재고") || sttText.contains("제 고") || sttText.contains("제거")){
+                        sttText = GetRecommendData("phone",phonePosition,"name") + " " + sttText;
+                    }
                     System.out.println("Final Text :: " + sttText);
                     microphoneHelper.closeInputStream();
                     check = false;

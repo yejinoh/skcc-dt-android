@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeWhole"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneNameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/light_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textViewPhoneNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="제품 이름"
+                android:textColor="@color/middle_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneNameReal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/relativeLayoutPhoneNameTitle"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/textViewPhoneNameReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="아이폰X"
+                android:textColor="@color/heavy_gray"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneComapanyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@id/relativeLayoutPhoneNameReal"
+            android:background="@color/light_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textViewPhoneCompanyTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="제조사"
+                android:textColor="@color/middle_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneComapanyReal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/relativeLayoutPhoneComapanyTitle"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:onClick="onClick"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/textViewPhoneComapanyReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Apple"
+                android:textColor="@color/heavy_gray"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneStorageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@id/relativeLayoutPhoneComapanyReal"
+            android:background="@color/light_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textViewPhoneStorageTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="저장용량"
+                android:textColor="@color/middle_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneStorageReal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/relativeLayoutPhoneStorageTitle"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:onClick="onClick"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/textViewPhoneStorageReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="64GB"
+                android:textColor="@color/heavy_gray"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneColorTitle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@id/relativeLayoutPhoneStorageReal"
+            android:background="@color/light_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textViewPhoneColorTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="색상"
+                android:textColor="@color/middle_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhoneColorReal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/relativeLayoutPhoneColorTitle"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
+
+
+        <TextView
+                android:id="@+id/textViewPhoneColorReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Gold"
+                android:textColor="@color/heavy_gray"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhonePriceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@id/relativeLayoutPhoneColorReal"
+            android:background="@color/light_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/textViewPhonePriceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="가격"
+                android:textColor="@color/middle_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPhonePriceReal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/relativeLayoutPhonePriceTitle"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="#FFFFFF">
+
+
+        <TextView
+                android:id="@+id/textViewPhonePriceReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="990,200원"
+                android:textColor="@color/heavy_gray"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/buttonExit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/relativeWhole"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/button_exit" />
+
+</RelativeLayout>
+

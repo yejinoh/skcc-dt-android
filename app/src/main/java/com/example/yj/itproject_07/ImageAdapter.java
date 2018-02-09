@@ -43,7 +43,7 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = layoutInflater.inflate(R.layout.card_item, container, false);
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        ImageView imageView = (ImageView)view.findViewById(R.id.imageViewPhone);
         imageView.setImageResource(listImages.get(position));
         container.addView(view);
         return view;

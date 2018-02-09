@@ -168,6 +168,49 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         ImageAdapter adapter = new ImageAdapter(listImages, getBaseContext());
         pagerPhone.setAdapter(adapter);
 
+
+        //View view = inflater.inflate(R.layout.man, container, false);
+
+        //View viewPhone = View.inflate(R.layout.card_item, )
+
+        // Inflater View 만들기
+        View relativeLayoutCardItem = (View) getLayoutInflater().
+                inflate(R.layout.card_item,null);
+
+        ImageView imageViewPhone = (ImageView)relativeLayoutCardItem.findViewById(R.id.imageViewPhone);
+        imageViewPhone.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("DT","이미지뷰뷰뷰 : ");
+                Toast.makeText(getApplicationContext(), "폰 눌렀다", Toast.LENGTH_LONG).show();
+
+               
+
+            }
+        });
+
+        //horizontal_cycle_plan
+       // HorizontalInfiniteCycleViewPager horizontalCyclePlan = (View)findViewById(R.id.horizontal_cycle_phone);
+        pagerPhone.setOnClickListener(new HorizontalInfiniteCycleViewPager.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "폰 눌렀다", Toast.LENGTH_LONG).show();
+                // Log.d()
+            }
+        });
+
+        ImageView imageViewFake = (ImageView)findViewById(R.id.imageViewFake);
+        imageViewFake.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DT","이미지뷰뷰뷰 : ");
+                Toast.makeText(getApplicationContext(), "폰 눌렀다", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+
         HorizontalInfiniteCycleViewPager pagerPlan = (HorizontalInfiniteCycleViewPager) findViewById(R.id.horizontal_cycle_plan);
         PlanAdapter adapterPlan = new PlanAdapter(listPlanNames, listPlanCosts, getBaseContext());
         pagerPlan.setAdapter(adapterPlan);

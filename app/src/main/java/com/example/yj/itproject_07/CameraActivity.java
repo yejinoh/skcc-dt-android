@@ -58,6 +58,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private void requestPermission()
     {
+        // 권한받기
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,

@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/textViewCommunicationFee"
                         android:gravity="right"
-                        android:text=" 44,829원"
+                        android:text=""
                         android:textColor="#FFFFFF"
                         android:textSize="30dp"/>
                 </RelativeLayout>
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/textViewVat"
                         android:gravity="right"
-                        android:text=" 8,961원"
+                        android:text=""
                         android:textColor="#FFFFFF"
                         android:textSize="30dp"/>
                 </RelativeLayout>
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/textViewInstallment"
                         android:gravity="right"
-                        android:text=" 47,680원"
+                        android:text=""
                         android:textColor="#FFFFFF"
                         android:textSize="30dp"/>
                 </RelativeLayout>

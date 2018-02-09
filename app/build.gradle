@@ -40,4 +40,9 @@ dependencies {
 
     // button library by juha
     compile 'com.sackcentury:shinebutton:0.2.0'
+
+    // camera loading gif
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+
 }

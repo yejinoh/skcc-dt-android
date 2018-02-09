@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="gender_info">
+        <item>남자</item>
+        <item>여자</item>
+    </string-array>
+
+    <string-array name="plan_info">
+        <item>Band 데이터 퍼펙트S</item>
+        <item>Band 데이터 퍼펙트</item>
+        <item>Band 데이터 3.5G</item>
+        <item>Band 데이터 1.2G</item>
+        <item>뉴 T끼리 맞춤형(100분+250MB)</item>
+        <item>Band 어르신 1.2G</item>
+    </string-array>
+
+    <string-array name="phone_info">
+        <item>iPhone X</item>
+        <item>iPhone 8</item>
+        <item>Galaxy S8</item>
+        <item>Galaxy A7</item>
+        <item>Galaxy A8</item>
+        <item>X4+</item>
+        <item>V30</item>
+        <item>Q6</item>
+        <item>XEPERIA XZ1</item>
+    </string-array>
+
+    <string-array name="extra_service_info">
+        <item>폰세이프IV R Plan 프리미엄</item>
+        <item>LTE 안심옵션</item>
+        <item>T안심콜</item>
+        <item>멜론 익스트리밍 플러스</item>
+        <item>지하철 프리</item>
+    </string-array>
+
+</resources>

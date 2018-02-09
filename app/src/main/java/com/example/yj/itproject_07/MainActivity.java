@@ -18,18 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneInputStream;
 import com.ibm.watson.developer_cloud.android.library.audio.utils.ContentType;
-import com.ibm.watson.developer_cloud.conversation.v1.*;
+import com.ibm.watson.developer_cloud.conversation.v1.Conversation;
 import com.ibm.watson.developer_cloud.conversation.v1.model.InputData;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
@@ -38,6 +30,14 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.RecognizeOptions;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechResults;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.BaseRecognizeCallback;
+import com.sackcentury.shinebuttonlib.ShineButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     boolean check = false;
@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean flag = false;
     public String chatbotMessage = new String();
     public TextToSpeech tts;
+    public String phonenames[];
 
     List<Integer> listImages = new ArrayList<>();
+    List<String> listPhoneNames = new ArrayList<>();
     List<String> listPlanNames = new ArrayList<>();
     List<String> listPlanCosts = new ArrayList<>();
     List<String> listPlanDatas = new ArrayList<>();
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.activity_main);
+
+        phonenames = new String[4];
 
         tts = new TextToSpeech(this, this);
         microphoneHelper = new MicrophoneHelper(this);
@@ -178,13 +182,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 ImageView imageViewBackground = (ImageView) findViewById(R.id.imageViewBackground);
                 switch (position%3) {
                     case 0:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_iphone_10);
+                        imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_a8);
                         break;
                     case 1:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_s8);
+                        imageViewBackground.setBackgroundResource(R.drawable.bg_q6);
                         break;
                     case 2:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_lg_v30);
+                        imageViewBackground.setBackgroundResource(R.drawable.bg_x4);
                         break;
                 }
 
@@ -200,6 +204,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void onPageScrollStateChanged(int state) {
                 //Toast.makeText(getApplicationContext(), state+"onPageScrollStateChanged", Toast.LENGTH_LONG).show();
                 Log.d("DT","onPageScrollStateChanged : "+state);
+            }
+        });
+
+        // 버튼 클릭 리스너
+        ShineButton shineButton = findViewById(R.id.po_image2);
+        shineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               mGotoJoinSKT(view);
             }
         });
 
@@ -267,12 +280,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private void initData(){
         // 핸드폰 사진 추가하기 위해서 Drawable의 사진 파일 불러옴.
-        listImages.add(R.drawable.iphone_10);
-        listImages.add(R.drawable.galaxy_s8);
-        listImages.add(R.drawable.lg_v30);
 
         for(int i=0;i<5;i++) {
             if(i<3) {
+                listPhoneNames.add(GetRecommendData("phone", i, "name"));
+                String phone = listPhoneNames.get(i);
+                Log.d(listPhoneNames.get(i), "phone name" + i );
                 listPlanNames.add(GetRecommendData("plan", i, "name"));
                 String temp = GetRecommendData("plan", i, "month_pay");
                 String month = "월 " + temp.substring(0,1) + "," + temp.substring(2,4) + "원";
@@ -280,9 +293,40 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 listPlanDatas.add(GetRecommendData("plan",i,"data"));
                 listPlanCalls.add(GetRecommendData("plan", i, "call"));
                 listPlanSmss.add(GetRecommendData("plan", i, "sms"));
+
+
+                if(listPhoneNames.get(i).equals("Galaxy A8"))
+                    listImages.add(R.drawable.galaxy_a8);
+                else if(listPhoneNames.get(i).equals("Galaxy A7") )
+                    listImages.add(R.drawable.galaxy_a7);
+                else if(listPhoneNames.get(i).equals("Galaxy S8"))
+                    listImages.add(R.drawable.galaxy_s8);
+                else if(listPhoneNames.get(i).equals("iPhone 8"))
+                    listImages.add(R.drawable.iphone_8);
+                else if(listPhoneNames.get(i).equals("X4+"))
+                    listImages.add(R.drawable.x4);
+                else if(listPhoneNames.get(i).equals("iPhone X"))
+                    listImages.add(R.drawable.iphone_10);
+                else if(listPhoneNames.get(i).equals("V30"))
+                    listImages.add(R.drawable.lg_v30);
+                else if(listPhoneNames.get(i).equals("Q6"))
+                    listImages.add(R.drawable.q6);
+                else if(listPhoneNames.get(i).equals("XPERIA XZ1"))
+                    listImages.add(R.drawable.xperia_xz1);
+
+
+
+
+
             }
 
         }
+
+
+
+
+
+
 
     }
 
@@ -426,5 +470,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             Toast.makeText(getApplicationContext(), "STT Disconnect!", Toast.LENGTH_LONG).show();
             //enableMicButton();
         }
+    }
+
+
+    public void mGotoJoinSKT(View view)
+    {
+        Intent intent = new Intent(view.getContext(), JoinSKTActivity.class);
+        Toast.makeText(getApplicationContext(), "GaJuha!", Toast.LENGTH_LONG).show();
+        view.getContext().startActivity(intent);
     }
 }

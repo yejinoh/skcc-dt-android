@@ -19,6 +19,7 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,6 +36,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CameraActivity extends AppCompatActivity {
     private FaceDetector mFaceDetector;
@@ -47,12 +50,14 @@ public class CameraActivity extends AppCompatActivity {
     private CameraSurfacePreview surfaceView;
     private String path;
     public static Context mContext;
-
+    private TimerTask timerTask;
+    private TimerTask timerTask2;
     static int width;
     static int height;
-
+    private int count = 3;
     private boolean isAccept = false;
 
+    private TextView countTextView;
     private ImageView imageViewLoading;
 
     @Override
@@ -76,6 +81,7 @@ public class CameraActivity extends AppCompatActivity {
         setTheme(android.R.style.Theme_Black_NoTitleBar_Fullscreen);
         setContentView(R.layout.camera);
 
+        countTextView = findViewById(R.id.countTextView);
 
         imageViewLoading = (ImageView) findViewById(R.id.imageViewLoading);
         GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(imageViewLoading);
@@ -165,7 +171,7 @@ public class CameraActivity extends AppCompatActivity {
         }
         if (mCameraSource != null) {
             try {
-                mPreview.start(mCameraSource, cameraOverlay);
+                mPreview.start(mCameraSource, null);
             } catch (IOException e) {
                 Log.e("ssg", "Unable to start camera source.", e);
                 mCameraSource.release();
@@ -185,7 +191,7 @@ public class CameraActivity extends AppCompatActivity {
         private CameraOverlay mOverlay;
 
         GraphicFaceTracker(CameraOverlay overlay) {
-            //mOverlay = overlay;
+            mOverlay = overlay;
         }
         @Override
         public void onNewItem(int faceId, Face item) {
@@ -196,17 +202,55 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+//    public void decreaseTime(){
+//        timerTask2 = new TimerTask() {
+//            public void run() {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        countTextView.setText(Integer.toString(count));
+//                        count--;
+//                    }
+//                });
+//            }
+//        };
+//        Timer mTimer = new Timer();
+//        mTimer.schedule(timerTask,1000);
+//    }
     public void takePicture() {
-        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
-            @Override
-            public void onPictureTaken(byte[] bytes) {
-                new SaveImage().execute(bytes);
 
-                // 로딩 돌아가기 시작
-                imageViewLoading.setVisibility(View.VISIBLE);
-
+//        for(int i=0;i<3;i++) {
+//            decreaseTime();
+//        }
+        timerTask = new TimerTask() {
+            public void run()
+            {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
+                                @Override
+                                public void onPictureTaken(byte[] bytes) {
+                                    new SaveImage().execute(bytes);
+                                }
+                            });
+                    }
+                });
             }
-        });
+        };
+
+        Timer mTimer = new Timer();
+        mTimer.schedule(timerTask,1500);
+//        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
+//            @Override
+//            public void onPictureTaken(byte[] bytes) {
+//                new SaveImage().execute(bytes);
+//
+//                // 로딩 돌아가기 시작
+//                imageViewLoading.setVisibility(View.VISIBLE);
+//
+//            }
+//        });
     }
 
     public void turn(){

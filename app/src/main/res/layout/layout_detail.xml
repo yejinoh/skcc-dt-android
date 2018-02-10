@@ -76,7 +76,6 @@
             android:layout_below="@id/relativeLayoutPhoneComapanyTitle"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:onClick="onClick"
             android:background="#FFFFFF">
 
             <TextView
@@ -115,7 +114,6 @@
             android:layout_below="@id/relativeLayoutPhoneStorageTitle"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:onClick="onClick"
             android:background="#FFFFFF">
 
             <TextView
@@ -218,4 +216,5 @@
         android:src="@drawable/button_exit" />
 
 </RelativeLayout>
+
 

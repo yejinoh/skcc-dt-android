@@ -232,6 +232,7 @@ public class CameraActivity extends AppCompatActivity {
                                 @Override
                                 public void onPictureTaken(byte[] bytes) {
                                     new SaveImage().execute(bytes);
+                                    imageViewLoading.setVisibility(View.VISIBLE);
                                 }
                             });
                     }

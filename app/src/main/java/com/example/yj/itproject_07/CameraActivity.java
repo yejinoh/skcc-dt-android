@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class CameraActivity extends AppCompatActivity {
@@ -258,6 +259,32 @@ public class CameraActivity extends AppCompatActivity {
 //                });
 //            }
 //        };
+//            decreaseTime();
+//        }
+        timerTask = new TimerTask() {
+            public void run()
+            {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
+                                @Override
+                                public void onPictureTaken(byte[] bytes) {
+                                    new SaveImage().execute(bytes);
+                                    imageViewLoading.setVisibility(View.VISIBLE);
+                                }
+                            });
+                    }
+                });
+            }
+        };
+
+        Timer mTimer = new Timer();
+        mTimer.schedule(timerTask,1500);
+//        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
+//            @Override
+//            public void onPictureTaken(byte[] bytes) {
+//                new SaveImage().execute(bytes);
 //
 //        Timer mTimer = new Timer();
 //

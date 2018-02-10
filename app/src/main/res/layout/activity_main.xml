@@ -104,32 +104,6 @@
                         android:textSize="30dp"/>
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayoutVat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_below="@id/relativeLayoutCommunicationFee">
-
-                    <TextView
-                        android:id="@+id/textViewVat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="부가사용금액"
-                        android:textColor="#FFFFFF"
-                        android:textSize="30dp"/>
-
-                    <TextView
-                        android:id="@+id/textViewExpectVat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/textViewVat"
-                        android:gravity="right"
-                        android:text=""
-                        android:textColor="#FFFFFF"
-                        android:textSize="30dp"/>
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/relativeLayoutInstallment"
@@ -137,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:layout_below="@id/relativeLayoutVat">
+                    android:layout_below="@id/relativeLayoutCommunicationFee">
 
                     <TextView
                         android:id="@+id/textViewInstallment"
@@ -185,29 +159,73 @@
                         android:textSize="40dp"
                         android:textColor="#CCE4DBD1"/>
                 </RelativeLayout>
+            </RelativeLayout>
 
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/relativeLayoutExpenct">
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutJoinThis"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center">
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/po_image2"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:src="@android:color/darker_gray"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@android:color/holo_red_dark"
+                        app:allow_random_color="false"
+                        app:siShape="@raw/like" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="마음에 들어요."
+                        android:layout_centerVertical="true"
+                        android:layout_below="@+id/po_image2"
+                        android:textSize="20sp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutJoinOther"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@+id/relativeLayoutJoinThis"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center">
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/po_image3"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:src="@android:color/darker_gray"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@android:color/holo_green_dark"
+                        app:allow_random_color="false"
+                        app:siShape="@raw/like"
+                        android:rotation="180"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="다른 상품으로 할게요."
+                        android:layout_centerVertical="true"
+                        android:layout_below="@+id/po_image3"
+                        android:textSize="20sp"/>
+                </RelativeLayout>
 
             </RelativeLayout>
 
-            <!-- 개통 버튼 -->
-            <com.sackcentury.shinebuttonlib.ShineButton
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_below="@id/relativeLayoutExpenct"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:src="@android:color/darker_gray"
-                android:id="@+id/po_image2"
-                app:btn_color="@android:color/darker_gray"
-                app:btn_fill_color="@android:color/holo_red_dark"
-                app:allow_random_color="false"
-                app:siShape="@raw/heart" />
 
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
 
 
 
@@ -230,9 +248,8 @@
             android:layout_margin="10dp"
             android:textSize="30dp"
             android:textColor="#CCFFFFFF" />
-
-
     </RelativeLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

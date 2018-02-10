@@ -30,11 +30,21 @@ import okhttp3.Response;
  */
 
 public class JoinSKTActivity extends AppCompatActivity{
-    String plan_String, gender_String, phone_String, extra_service_String;
     private EditText name_editText, age_editText, phone_number_editText,
             remain_editText, remain_month_editText, id_number_editText, address_editText,
             account_editText, bank_editText;
-    
+
+    public static String phone_String, plan_String, gender_String, extra_service_String;
+
+    private void SetRecommend(Spinner targetSpinner, String[] targetArray , String targetString){
+        for(int i=0;i<targetArray.length;i++){
+            if(targetArray[i].equals(targetString)){
+                targetSpinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +53,10 @@ public class JoinSKTActivity extends AppCompatActivity{
 
         String[] gender_str = getResources().getStringArray(R.array.gender_info);
         ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , gender_str);
+
         final Spinner gender_spinner = findViewById(R.id.spinner_gender);
         gender_spinner.setAdapter(gender_adapter);
+
         gender_spinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -108,6 +120,10 @@ public class JoinSKTActivity extends AppCompatActivity{
                     public void onNothingSelected(AdapterView<?> parent) {}
                 }
         );
+
+        SetRecommend(gender_spinner,gender_str,gender_String);
+        SetRecommend(plan_spinner,plan_str,plan_String);
+        SetRecommend(phone_spinner,phone_str,phone_String);
 
         Button button = findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener(){

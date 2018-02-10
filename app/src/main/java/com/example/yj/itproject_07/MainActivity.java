@@ -212,8 +212,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         imageViewFake.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("DT","이미지뷰뷰뷰 : ");
-                //Toast.makeText(getApplicationContext(), "폰 눌렀다", Toast.LENGTH_LONG).show();
+
+                DetailActivity.color = GetRecommendData("phone",phonePosition,"color").split(",")[0];
+                DetailActivity.company = GetRecommendData("phone",phonePosition,"company");
+                DetailActivity.name = GetRecommendData("phone",phonePosition,"name");
+                DetailActivity.price = AddComma(GetRecommendData("phone",phonePosition,"price").split(",")[0]);
+                DetailActivity.storage = GetRecommendData("phone",phonePosition,"storage").split(",")[0];
 
                 Intent i = new Intent(MainActivity.this, DetailActivity.class);
                 //i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -230,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ImageView imageViewBackground = (ImageView) findViewById(R.id.imageViewBackground);
-                switch (position % 3) {
+                switch (position % 5) {
                     case 0:
                         imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_a8);
                         break;
@@ -242,8 +246,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         break;
                 }
 
-                //Log.d("DT","onPageScrolled : " + Integer.toString(position % 3));
-                phonePosition = (position % 3);
+                Log.d("DT","onPageScrolled : " + Integer.toString(position % 5));
+                phonePosition = (position % 5);
                 SetTotal();
 
             }
@@ -293,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 //Log.d("DT","onPageScrollStateChanged : " + state);
             }
         });
+
 
     }
 
@@ -362,6 +367,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             JSONObject data = obj.getJSONObject("data");
             phone = data.getJSONArray("phone");
             plan = data.getJSONArray("plan");
+            JoinSKTActivity.gender_String = data.getString("sex");
 
             //System.out.println(plan.getJSONObject(0).getString("name"));
             //System.out.println(phone);
@@ -409,33 +415,25 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 listPlanDatas.add(GetRecommendData("plan",i,"data"));
                 listPlanCalls.add(GetRecommendData("plan", i, "call"));
                 listPlanSmss.add(GetRecommendData("plan", i, "sms"));
-
-
-                if(listPhoneNames.get(i).equals("Galaxy A8"))
-                    listImages.add(R.drawable.galaxy_a8);
-                else if(listPhoneNames.get(i).equals("Galaxy A7") )
-                    listImages.add(R.drawable.galaxy_a7);
-                else if(listPhoneNames.get(i).equals("Galaxy S8"))
-                    listImages.add(R.drawable.galaxy_s8);
-                else if(listPhoneNames.get(i).equals("iPhone 8"))
-                    listImages.add(R.drawable.iphone_8);
-                else if(listPhoneNames.get(i).equals("X4+"))
-                    listImages.add(R.drawable.x4);
-                else if(listPhoneNames.get(i).equals("iPhone X"))
-                    listImages.add(R.drawable.iphone_10);
-                else if(listPhoneNames.get(i).equals("V30"))
-                    listImages.add(R.drawable.lg_v30);
-                else if(listPhoneNames.get(i).equals("Q6"))
-                    listImages.add(R.drawable.q6);
-                else if(listPhoneNames.get(i).equals("XPERIA XZ1"))
-                    listImages.add(R.drawable.xperia_xz1);
-
-
-
-
-
             }
-
+            if(GetRecommendData("phone",i,"name").equals("Galaxy A8"))
+                listImages.add(R.drawable.galaxy_a8);
+            else if(GetRecommendData("phone",i,"name").equals("Galaxy A7") )
+                listImages.add(R.drawable.galaxy_a7);
+            else if(GetRecommendData("phone",i,"name").equals("Galaxy S8"))
+                listImages.add(R.drawable.galaxy_s8);
+            else if(GetRecommendData("phone",i,"name").equals("iPhone 8"))
+                listImages.add(R.drawable.iphone_8);
+            else if(GetRecommendData("phone",i,"name").equals("X4+"))
+                listImages.add(R.drawable.x4);
+            else if(GetRecommendData("phone",i,"name").equals("iPhone X"))
+                listImages.add(R.drawable.iphone_10);
+            else if(GetRecommendData("phone",i,"name").equals("V30"))
+                listImages.add(R.drawable.lg_v30);
+            else if(GetRecommendData("phone",i,"name").equals("Q6"))
+                listImages.add(R.drawable.q6);
+            else if(GetRecommendData("phone",i,"name").equals("XPERIA XZ1"))
+                listImages.add(R.drawable.xperia_xz1);
         }
 
 
@@ -498,7 +496,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // TODO Auto-generated method stub
 
         if (status == TextToSpeech.SUCCESS) {
-
             int result = tts.setLanguage(Locale.KOREA);
 
             // tts.setPitch(5); // set pitch level
@@ -510,6 +507,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 Log.e("TTS", "Language is not supported");
             } else {
 
+                String initMessage = new String();
+                try {
+                    JSONObject obj = new JSONObject(recommends);
+                    JSONObject data = obj.getJSONObject("data");
+                    initMessage = data.getString("age") + "대 " + data.getString("sex") + "분께 추천드리는 기기와 요금제 입니다.";
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+                tts.speak(initMessage, TextToSpeech.QUEUE_FLUSH, null, null);
             }
 
         } else {
@@ -601,7 +608,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void mGotoJoinSKT(View view)
     {
         Intent intent = new Intent(view.getContext(), JoinSKTActivity.class);
-        Toast.makeText(getApplicationContext(), "GaJuha!", Toast.LENGTH_LONG).show();
+        JoinSKTActivity.phone_String = GetRecommendData("phone",phonePosition,"name");
+        JoinSKTActivity.plan_String = GetRecommendData("plan",planPosition,"name");
+
+        //Toast.makeText(getApplicationContext(), "GaJuha!", Toast.LENGTH_LONG).show();
         view.getContext().startActivity(intent);
     }
 }

@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="아이폰X"
+                android:text=""
                 android:textColor="@color/heavy_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Apple"
+                android:text=""
                 android:textColor="@color/heavy_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -121,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="64GB"
+                android:text=""
                 android:textColor="@color/heavy_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Gold"
+                android:text=""
                 android:textColor="@color/heavy_gray"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -200,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="990,200원"
+                android:text=""
                 android:textColor="@color/heavy_gray"
                 android:textSize="16sp" />
         </RelativeLayout>

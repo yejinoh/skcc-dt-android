@@ -36,6 +36,11 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
+        <activity android:name=".JoinSKTActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
+        </activity>
+
         <activity android:name=".DetailActivity"
             android:theme="@style/Theme.Transparent">
         </activity>

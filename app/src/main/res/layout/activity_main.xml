@@ -21,7 +21,7 @@
                 android:id="@+id/imageViewBackground"
                 android:layout_width="match_parent"
                 android:layout_height="1400dp"
-                android:background="@drawable/bg_galaxy_s8" />
+                android:background="@drawable/bg_galaxy_a8" />
 
             <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
                 android:id="@+id/horizontal_cycle_phone"
@@ -201,7 +201,7 @@
                 app:btn_color="@android:color/darker_gray"
                 app:btn_fill_color="@android:color/holo_red_dark"
                 app:allow_random_color="false"
-                app:siShape="@raw/heart"/>
+                app:siShape="@raw/heart" />
 
         </RelativeLayout>
 

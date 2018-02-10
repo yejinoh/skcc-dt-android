@@ -17,12 +17,20 @@ public class PlanAdapter extends PagerAdapter {
 
     List<String> listPlanNames;
     List<String> listPlanCosts;
+
+    List<String> listPlanDatas;
+    List<String> listPlanCalls;
+    List<String> listPlanSmss;
+
     Context context;
     LayoutInflater layoutInflater;
 
-    public PlanAdapter(List<String> listString1, List<String> listString2, Context context) {
+    public PlanAdapter(List<String> listString1, List<String> listString2, List<String> listString3, List<String> listString4, List<String> listString5, Context context) {
         this.listPlanNames=listString1;
         this.listPlanCosts=listString2;
+        this.listPlanDatas=listString3;
+        this.listPlanCalls=listString4;
+        this.listPlanSmss=listString5;
 
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
@@ -49,9 +57,15 @@ public class PlanAdapter extends PagerAdapter {
         View view = layoutInflater.inflate(R.layout.plan_item, container, false);
         TextView textViewPlanName = (TextView)view.findViewById(R.id.textViewPlanName);
         TextView textViewPlanCost = (TextView)view.findViewById(R.id.textViewPlanCost);
+        TextView textViewPlanData = (TextView)view.findViewById(R.id.textViewPlanData);
+        TextView textViewPlanCall = (TextView)view.findViewById(R.id.textViewPlanCall);
+        TextView textViewPlanSms = (TextView)view.findViewById(R.id.textViewPlanSms);
 
-        textViewPlanName.setText(listPlanNames.get(position)); //setImageResource
-        textViewPlanCost.setText(listPlanCosts.get(position)); //setImageResource
+        textViewPlanName.setText(listPlanNames.get(position));
+        textViewPlanCost.setText(listPlanCosts.get(position));
+        textViewPlanData.setText(listPlanDatas.get(position));
+        textViewPlanCall.setText(listPlanCalls.get(position));
+        textViewPlanSms.setText(listPlanSmss.get(position));
 
         container.addView(view);
         return view;

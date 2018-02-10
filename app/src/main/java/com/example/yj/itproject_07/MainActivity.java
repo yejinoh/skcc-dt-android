@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
         HorizontalInfiniteCycleViewPager pagerPlan = (HorizontalInfiniteCycleViewPager) findViewById(R.id.horizontal_cycle_plan);
-        PlanAdapter adapterPlan = new PlanAdapter(listPlanNames, listPlanCosts, getBaseContext());
+        PlanAdapter adapterPlan = new PlanAdapter(listPlanNames, listPlanCosts, listPlanDatas, listPlanCalls, listPlanSmss, getBaseContext());
         pagerPlan.setAdapter(adapterPlan);
         pagerPlan.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

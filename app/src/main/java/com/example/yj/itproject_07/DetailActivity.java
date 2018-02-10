@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Administrator on 2018-02-09.
@@ -42,7 +41,7 @@ public class DetailActivity extends AppCompatActivity{
         buttonExit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "뒤로가기", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "뒤로가기", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

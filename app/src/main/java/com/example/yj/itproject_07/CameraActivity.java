@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
@@ -37,7 +37,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Timer;
 import java.util.TimerTask;
 
 public class CameraActivity extends AppCompatActivity {
@@ -61,6 +60,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private TextView countTextView;
     private ImageView imageViewLoading;
+
+    MediaPlayer countSound;
 
     @Override
     protected void onResume(){
@@ -101,11 +102,14 @@ public class CameraActivity extends AppCompatActivity {
             createCameraSource();
         }
 
+        countSound = MediaPlayer.create(this, R.raw.timer_count);
+        countSound.setLooping(false);
+
         RelativeLayout buttonAccept=(RelativeLayout)findViewById(R.id.relativeLayoutAccept);
         buttonAccept.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "동의", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "동의", Toast.LENGTH_LONG).show();
                 isAccept = true;
 
                 // 사진 촬영 동의 누를 경우 사라진다.
@@ -113,10 +117,15 @@ public class CameraActivity extends AppCompatActivity {
                 relativeLayoutPermission.setVisibility(View.INVISIBLE);
 
                 // 얼굴인식 시작(3,2,1)
-                new CountDownTimer(4000, 1000) {
-
+                countSound.start();
+                new CountDownTimer(2300, 550) {
                     public void onTick(long millisUntilFinished) {
-                        countTextView.setText(String.valueOf(count));
+                        if(count == 0){
+                            countTextView.setText("Cheese !!");
+                        }
+                        else {
+                            countTextView.setText(String.valueOf(count));
+                        }
                         count--;
                     }
 
@@ -135,7 +144,7 @@ public class CameraActivity extends AppCompatActivity {
         buttonDeny.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "싫어", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "싫어", Toast.LENGTH_LONG).show();
 
                 Intent i = new Intent(CameraActivity.this, HomeActivity.class);
                 startActivity(i);
@@ -223,73 +232,7 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-//    public void decreaseTime(){
-//        timerTask2 = new TimerTask() {
-//            public void run() {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        countTextView.setText(Integer.toString(count));
-//                        count--;
-//                    }
-//                });
-//            }
-//        };
-//        Timer mTimer = new Timer();
-//        mTimer.schedule(timerTask,1000);
-//    }
     public void takePicture() {
-
-//        for(int i=0;i<3;i++) {
-////            decreaseTime();
-////        }
-//        timerTask = new TimerTask() {
-//            public void run()
-//            {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
-//                                @Override
-//                                public void onPictureTaken(byte[] bytes) {
-//                                    new SaveImage().execute(bytes);
-//                                }
-//                            });
-//                    }
-//                });
-//            }
-//        };
-//            decreaseTime();
-//        }
-        timerTask = new TimerTask() {
-            public void run()
-            {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
-                                @Override
-                                public void onPictureTaken(byte[] bytes) {
-                                    new SaveImage().execute(bytes);
-                                    imageViewLoading.setVisibility(View.VISIBLE);
-                                }
-                            });
-                    }
-                });
-            }
-        };
-
-        Timer mTimer = new Timer();
-        mTimer.schedule(timerTask,1500);
-//        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
-//            @Override
-//            public void onPictureTaken(byte[] bytes) {
-//                new SaveImage().execute(bytes);
-//
-//        Timer mTimer = new Timer();
-//
-//        mTimer.schedule(timerTask,1500);
-
         mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
             @Override
             public void onPictureTaken(byte[] bytes) {
@@ -300,24 +243,12 @@ public class CameraActivity extends AppCompatActivity {
 
             }
         });
-
-       /* mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
-            @Override
-            public void onPictureTaken(byte[] bytes) {
-                new SaveImage().execute(bytes);
-
-                // 로딩 돌아가기 시작
-                imageViewLoading.setVisibility(View.VISIBLE);
-
-            }
-        });*/
     }
 
     public void turn(){
         Intent i = new Intent(CameraActivity.this, MainActivity.class);
         startActivity(i);
         finish();
-        //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
     }
 
 

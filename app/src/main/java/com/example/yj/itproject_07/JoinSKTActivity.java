@@ -39,11 +39,13 @@ public class JoinSKTActivity extends AppCompatActivity{
     private View view;
 
     public static String phone_String, plan_String, gender_String, extra_service_String;
+    public static boolean flag = false;
 
     private void SetRecommend(Spinner targetSpinner, String[] targetArray , String targetString){
         for(int i=0;i<targetArray.length;i++){
             if(targetArray[i].equals(targetString)){
                 targetSpinner.setSelection(i);
+                System.out.println(targetString + " ::: " + Integer.toString(i));
                 break;
             }
         }
@@ -60,9 +62,11 @@ public class JoinSKTActivity extends AppCompatActivity{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!flag) flag = true;
+                else flag = false;
+
+                System.out.println(flag);
                 MainActivity.fab.callOnClick();
-
-
             }
 
         });
@@ -97,6 +101,7 @@ public class JoinSKTActivity extends AppCompatActivity{
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(plan_spinner.getSelectedItemPosition() >= 0){
                             plan_String = parent.getItemAtPosition(position).toString();
+                            System.out.println(plan_String);
                         }
                     }
                     @Override
@@ -114,6 +119,7 @@ public class JoinSKTActivity extends AppCompatActivity{
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if(phone_spinner.getSelectedItemPosition() >= 0){
                             phone_String = parent.getItemAtPosition(position).toString();
+                            System.out.println(phone_String);
                         }
                     }
                     @Override

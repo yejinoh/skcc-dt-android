@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.ibm.watson.developer_cloud.android.library.audio.MicrophoneHelper;
@@ -238,19 +237,27 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ImageView imageViewBackground = (ImageView) findViewById(R.id.imageViewBackground);
-                switch (position % 5) {
-                    case 0:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_a8);
-                        break;
-                    case 1:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_q6);
-                        break;
-                    case 2:
-                        imageViewBackground.setBackgroundResource(R.drawable.bg_x4);
-                        break;
-                }
 
-                Log.d("DT","onPageScrolled : " + Integer.toString(position % 5));
+                if(GetRecommendData("phone",position%5,"name").equals("Galaxy A8"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_a8);
+                else if(GetRecommendData("phone",position%5,"name").equals("Galaxy A7") )
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_a7);
+                else if(GetRecommendData("phone",position%5,"name").equals("Galaxy S8"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_galaxy_s8);
+                else if(GetRecommendData("phone",position%5,"name").equals("iPhone 8"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_iphone_8);
+                else if(GetRecommendData("phone",position%5,"name").equals("X4+"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_x4);
+                else if(GetRecommendData("phone",position%5,"name").equals("iPhone X"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_iphone_10);
+                else if(GetRecommendData("phone",position%5,"name").equals("V30"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_lg_v30);
+                else if(GetRecommendData("phone",position%5,"name").equals("Q6"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_q6);
+                else if(GetRecommendData("phone",position%5,"name").equals("XPERIA XZ1"))
+                    imageViewBackground.setBackgroundResource(R.drawable.bg_xperia_xz1);
+
+                //Log.d("DT","onPageScrolled : " + Integer.toString(position % 5));
                 phonePosition = (position % 5);
                 SetTotal();
 
@@ -582,14 +589,25 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 if(speechResults.getResults().get(0).isFinal()){
                     STTend.start();
                     if(sttText.contains("재고") || sttText.contains("제 고") || sttText.contains("제거")){
-                        sttText = GetRecommendData("phone",phonePosition,"name") + " " + sttText;
+                        if(!JoinSKTActivity.flag)
+                            sttText = GetRecommendData("phone",phonePosition,"name") + " " + sttText;
+                        else {
+                            sttText = JoinSKTActivity.phone_String + " " + sttText;
+                        }
                     }
-                    else if(sttText.contains("부가")){
-                        sttText = GetRecommendData("plan",planPosition,"name") + " " + sttText;
+                    else if(sttText.contains("부가") || sttText.contains("보안")){
+                        if(!JoinSKTActivity.flag)
+                            sttText = GetRecommendData("plan",planPosition,"name") + " " + sttText;
+                        else {
+                            System.out.println("::" + JoinSKTActivity.plan_String);
+                            sttText = JoinSKTActivity.plan_String + " " + sttText;
+                        }
                     }
                     System.out.println("Final Text :: " + sttText);
                     microphoneHelper.closeInputStream();
                     check = false;
+                    if(JoinSKTActivity.flag)
+                        JoinSKTActivity.flag = false;
                     ConversationRequest();
                 }
             }

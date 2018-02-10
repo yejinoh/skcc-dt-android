@@ -9,8 +9,8 @@
     <string-array name="plan_info">
         <item>Band 데이터 퍼펙트S</item>
         <item>Band 데이터 퍼펙트</item>
-        <item>Band 데이터 3.5G</item>
-        <item>Band 데이터 1.2G</item>
+        <item>Band 3.2G</item>
+        <item>Band 1.2G</item>
         <item>뉴 T끼리 맞춤형(100분+250MB)</item>
         <item>Band 어르신 1.2G</item>
     </string-array>
@@ -24,7 +24,7 @@
         <item>X4+</item>
         <item>V30</item>
         <item>Q6</item>
-        <item>XEPERIA XZ1</item>
+        <item>XPERIA XZ1</item>
     </string-array>
 
     <string-array name="extra_service_info">

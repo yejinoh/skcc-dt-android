@@ -6,11 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/countTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
     <com.example.yj.itproject_07.CameraSurfacePreview
     android:id="@+id/preview_camera"
@@ -101,4 +96,12 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/countTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/light_gray"
+        android:textSize="40sp" />
 </RelativeLayout>

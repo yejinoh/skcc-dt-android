@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Timer;
 import java.util.TimerTask;
 
 public class CameraActivity extends AppCompatActivity {
@@ -56,6 +56,7 @@ public class CameraActivity extends AppCompatActivity {
     static int height;
     private int count = 3;
     private boolean isAccept = false;
+    private boolean ssg = false;
 
     private TextView countTextView;
     private ImageView imageViewLoading;
@@ -111,6 +112,19 @@ public class CameraActivity extends AppCompatActivity {
                 relativeLayoutPermission.setVisibility(View.INVISIBLE);
 
                 // 얼굴인식 시작(3,2,1)
+                new CountDownTimer(4000, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        countTextView.setText(String.valueOf(count));
+                        count--;
+                    }
+
+                    public void onFinish() {
+                        countTextView.setVisibility(View.INVISIBLE);
+                        ssg=true;
+                    }
+
+                }.start();
 
 
             }
@@ -195,8 +209,14 @@ public class CameraActivity extends AppCompatActivity {
         }
         @Override
         public void onNewItem(int faceId, Face item) {
-            if(check || !isAccept) return;
+            if(!ssg || check || !isAccept) return;
             mOverlay = cameraOverlay;
+            takePicture();
+            check = true;
+        }
+        @Override
+        public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face){
+            if(!ssg || check || !isAccept) return;
             takePicture();
             check = true;
         }
@@ -220,37 +240,50 @@ public class CameraActivity extends AppCompatActivity {
     public void takePicture() {
 
 //        for(int i=0;i<3;i++) {
-//            decreaseTime();
-//        }
-        timerTask = new TimerTask() {
-            public void run()
-            {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
-                                @Override
-                                public void onPictureTaken(byte[] bytes) {
-                                    new SaveImage().execute(bytes);
-                                }
-                            });
-                    }
-                });
-            }
-        };
-
-        Timer mTimer = new Timer();
-        mTimer.schedule(timerTask,1500);
-//        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
-//            @Override
-//            public void onPictureTaken(byte[] bytes) {
-//                new SaveImage().execute(bytes);
-//
-//                // 로딩 돌아가기 시작
-//                imageViewLoading.setVisibility(View.VISIBLE);
-//
+////            decreaseTime();
+////        }
+//        timerTask = new TimerTask() {
+//            public void run()
+//            {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                            mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
+//                                @Override
+//                                public void onPictureTaken(byte[] bytes) {
+//                                    new SaveImage().execute(bytes);
+//                                }
+//                            });
+//                    }
+//                });
 //            }
-//        });
+//        };
+//
+//        Timer mTimer = new Timer();
+//
+//        mTimer.schedule(timerTask,1500);
+
+        mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
+            @Override
+            public void onPictureTaken(byte[] bytes) {
+                new SaveImage().execute(bytes);
+
+                // 로딩 돌아가기 시작
+                imageViewLoading.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+       /* mCameraSource.takePicture(null, new CameraSource.PictureCallback(){
+            @Override
+            public void onPictureTaken(byte[] bytes) {
+                new SaveImage().execute(bytes);
+
+                // 로딩 돌아가기 시작
+                imageViewLoading.setVisibility(View.VISIBLE);
+
+            }
+        });*/
     }
 
     public void turn(){

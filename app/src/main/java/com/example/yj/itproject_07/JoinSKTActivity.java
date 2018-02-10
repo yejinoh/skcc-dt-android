@@ -1,6 +1,7 @@
 package com.example.yj.itproject_07;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,12 +34,27 @@ public class JoinSKTActivity extends AppCompatActivity{
     private EditText name_editText, age_editText, phone_number_editText,
             remain_editText, remain_month_editText, id_number_editText, address_editText,
             account_editText, bank_editText;
+    private FloatingActionButton fab;
+    private View view;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.joinskt);
+
+        //view = getLayoutInflater().inflate(R.layout.activity_main, null, false);
+        fab = findViewById(R.id.fab1);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.fab.callOnClick();
+
+
+            }
+
+        });
+
 
         String[] gender_str = getResources().getStringArray(R.array.gender_info);
         ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , gender_str);

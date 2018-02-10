@@ -45,7 +45,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     boolean check = false;
-    private FloatingActionButton fab;
+    public static FloatingActionButton fab;
+    private FloatingActionButton fab1;
+
     public RelativeLayout chatView;
     public RelativeLayout chat;
 
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public static int phonePosition = 0;
     public static int planPosition = 0;
+
+    private View view;
 
     MediaPlayer STTstart;
     MediaPlayer STTend;

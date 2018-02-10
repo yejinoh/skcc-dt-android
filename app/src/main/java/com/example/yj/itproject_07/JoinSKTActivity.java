@@ -1,5 +1,6 @@
 package com.example.yj.itproject_07;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -113,7 +114,11 @@ public class JoinSKTActivity extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 try {
+                    // 가입 정보 서버로 보낸다.
                     postToServer("http://169.56.93.18:8080/user/join", MakeInfoJson());
+
+
+
                 }catch (IOException e){
                     e.printStackTrace();
                 }
@@ -200,6 +205,13 @@ public class JoinSKTActivity extends AppCompatActivity{
                         } else {
                             final String responseData = response.body().string();
                             System.out.println(responseData);
+
+                            // 가입 완료 화면 띄워준다.
+                            Intent i = new Intent(JoinSKTActivity.this, JoinCompleteActivity.class);
+                            startActivity(i);
+
+
+
                         }
                     }
                 });

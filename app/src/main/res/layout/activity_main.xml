@@ -162,60 +162,67 @@
             </RelativeLayout>
 
 
-
             <RelativeLayout
-                android:id="@+id/relativeLayoutJoinThis"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_below="@+id/relativeLayoutExpenct"
-                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:gravity="center">
-                <com.sackcentury.shinebuttonlib.ShineButton
-                    android:id="@+id/po_image2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@android:color/darker_gray"
-                    app:btn_color="@android:color/darker_gray"
-                    app:btn_fill_color="@android:color/holo_red_dark"
-                    app:allow_random_color="false"
-                    app:siShape="@raw/heart" />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/relativeLayoutExpenct">
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutJoinThis"
                     android:layout_height="wrap_content"
-                    android:text="마음에 들어요."
+                    android:layout_width="wrap_content"
+                    android:gravity="center">
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/po_image2"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:src="@android:color/darker_gray"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@android:color/holo_red_dark"
+                        app:allow_random_color="false"
+                        app:siShape="@raw/like" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="마음에 들어요."
+                        android:layout_centerVertical="true"
+                        android:layout_below="@+id/po_image2"
+                        android:textSize="20sp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutJoinOther"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_toRightOf="@+id/relativeLayoutJoinThis"
+                    android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/po_image2"
-                    android:textSize="16sp"/>
+                    android:gravity="center">
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/po_image3"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:src="@android:color/darker_gray"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="@android:color/holo_green_dark"
+                        app:allow_random_color="false"
+                        app:siShape="@raw/like"
+                        android:rotation="180"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="다른 상품으로 할게요."
+                        android:layout_centerVertical="true"
+                        android:layout_below="@+id/po_image3"
+                        android:textSize="20sp"/>
+                </RelativeLayout>
+
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayoutJoinOther"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_below="@+id/relativeLayoutJoinThis"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:gravity="center">
-                <com.sackcentury.shinebuttonlib.ShineButton
-                    android:id="@+id/po_image3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@android:color/darker_gray"
-                    app:btn_color="@android:color/darker_gray"
-                    app:btn_fill_color="@android:color/holo_green_dark"
-                    app:allow_random_color="false"
-                    app:siShape="@raw/star" />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="다른 상품으로 할게요."
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/po_image3"
-                    android:textSize="16sp"/>
-            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

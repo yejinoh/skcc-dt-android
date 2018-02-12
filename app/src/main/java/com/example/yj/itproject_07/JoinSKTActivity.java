@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,12 +40,16 @@ import okhttp3.Response;
  * Created by YJ on 2018-02-09.
  */
 
-public class JoinSKTActivity extends Activity{
+public class JoinSKTActivity extends Activity implements TextToSpeech.OnInitListener{
     private EditText name_editText, age_editText, phone_number_editText,
             id_number_editText, address_editText, account_editText, bank_editText;
     public static String phone_String, plan_String, gender_String, extra_service_String, join_type_String;
     public static boolean flag = false;
     public static boolean re_flag = true;
+
+    public static String Selected_phone = new String();
+    public static String Selected_plan = new String();
+
     int signviewHight;
     int signviewWidth;
     LinearLayout linearLayout;
@@ -51,6 +57,8 @@ public class JoinSKTActivity extends Activity{
     Bitmap bitmap;
     public ImageView signview;
     public TextView sign;
+
+    private TextToSpeech tts;
 
     private FloatingActionButton fab1;
 
@@ -72,6 +80,8 @@ public class JoinSKTActivity extends Activity{
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         String[] gender_str = getResources().getStringArray(R.array.gender_info);
         ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , gender_str);
+
+        tts = new TextToSpeech(this, this);
 
         fab1 = findViewById(R.id.fab1);
         fab1.setOnClickListener(new View.OnClickListener(){
@@ -205,6 +215,12 @@ public class JoinSKTActivity extends Activity{
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(JoinSKTActivity.this, main.class);
+
+                // Effect를 보기 위한 Delay
+                try{
+                    Thread.sleep(2000);
+                } catch(InterruptedException e){}
+
                 startActivityForResult(intent, 1);
             }
         });
@@ -273,6 +289,51 @@ public class JoinSKTActivity extends Activity{
 
         Log.w("Layout Width - ", String.valueOf(signview.getWidth()));
         Log.w("Layout Height - ", String.valueOf(signview.getHeight()));
+    }
+
+    @Override
+    public void onInit(int status) {
+        // TODO Auto-generated method stub
+
+        if (status == TextToSpeech.SUCCESS) {
+            int result = tts.setLanguage(Locale.KOREA);
+
+            // tts.setPitch(5); // set pitch level
+
+            // tts.setSpeechRate(2); // set speech speed rate
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "Language is not supported");
+            } else {
+                if(Selected_phone != null && Selected_plan != null){
+                    String initMessage = new String();
+                    try {
+                        initMessage = "  추천이 마음에 드셨군요! " + Selected_phone + " 기기와" + Selected_plan + " 요금제를 선택하셨습니다. 가입 폼을 작성해 주세요!";
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    tts.speak(initMessage, TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+                else{
+                    String initMessage = new String();
+                    try {
+                        initMessage = "  추천이 마음에 들지 않으셨군요.. 원하시는 기기와 요금제를 선택해 주시고 나머지 가입 폼을 작성해 주세요.";
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    tts.speak(initMessage, TextToSpeech.QUEUE_FLUSH, null, null);
+                }
+
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed");
+        }
+
+
     }
 
 
@@ -358,4 +419,6 @@ public class JoinSKTActivity extends Activity{
 
         }).start();
     }
+
+
 }

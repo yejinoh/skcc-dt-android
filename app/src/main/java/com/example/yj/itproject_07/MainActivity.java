@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -280,6 +281,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         shineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                JoinSKTActivity.Selected_plan = GetRecommendData("plan",planPosition,"name");
+                JoinSKTActivity.Selected_phone = GetRecommendData("phone",phonePosition,"name");
                 JoinSKTActivity.re_flag = true;
                 mGotoJoinSKT(view);
                 // 색깔 빠지게
@@ -293,6 +296,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         shineButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                JoinSKTActivity.Selected_phone = null;
+                JoinSKTActivity.Selected_plan = null;
                 JoinSKTActivity.re_flag = false;
                 Intent i = new Intent(MainActivity.this, JoinSKTActivity.class);
                 startActivity(i);
@@ -539,6 +544,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     JSONObject obj = new JSONObject(recommends);
                     JSONObject data = obj.getJSONObject("data");
                     initMessage = data.getString("age") + "대 " + data.getString("sex") + "분께 추천드리는 기기와 요금제 입니다.";
+                    initMessage = "             " + initMessage;
                 }
                 catch(Exception e){
                     e.printStackTrace();

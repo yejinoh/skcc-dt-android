@@ -166,11 +166,11 @@
                 android:layout_width="500dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="10dp"
-                android:layout_margin="30dp"
                 android:background="@drawable/round_shape"
                 android:layout_below="@id/relativeLayoutExpenct"
-                android:elevation="10dp">
+                android:layout_margin="30dp"
+                android:elevation="10dp"
+                android:padding="10dp">
                 <TextView
                     android:id="@+id/textViewSatisfy"
                     android:layout_width="wrap_content"
@@ -180,65 +180,52 @@
                     android:textColor="#77FFFFFF"/>
                 <RelativeLayout
                     android:id="@+id/relativeLayoutJoinThis"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
                     android:layout_width="200dp"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/round_shape"
+                    android:background="@color/transparent"
                     android:layout_below="@id/textViewSatisfy">
+
                     <com.sackcentury.shinebuttonlib.ShineButton
                         android:id="@+id/po_image2"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_margin="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="21dp"
                         android:src="@android:color/darker_gray"
+                        app:allow_random_color="false"
                         app:btn_color="@android:color/holo_red_dark"
                         app:btn_fill_color="@android:color/holo_red_dark"
-                        app:allow_random_color="false"
                         app:siShape="@raw/heart" />
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="좋아요"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/po_image2"
-                        android:textSize="20sp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/relativeLayoutJoinOther"
-                    android:layout_height="wrap_content"
                     android:layout_width="200dp"
-                    android:layout_toRightOf="@+id/relativeLayoutJoinThis"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/round_shape"
-                    android:gravity="center"
-                    android:layout_alignTop="@id/relativeLayoutJoinThis">
+                    android:layout_height="150dp"
+                    android:layout_alignTop="@+id/relativeLayoutJoinThis"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/relativeLayoutJoinThis"
+                    android:background="@color/transparent"
+                    android:gravity="center">
+
                     <com.sackcentury.shinebuttonlib.ShineButton
                         android:id="@+id/po_image3"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_margin="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginStart="21dp"
                         android:src="@android:color/darker_gray"
+                        app:allow_random_color="false"
                         app:btn_color="@android:color/holo_green_dark"
                         app:btn_fill_color="@android:color/holo_green_dark"
-                        app:allow_random_color="false"
-                        app:siShape="@raw/like"       />
-                        <!--android:rotation="180"-->
+                        app:shine_turn_angle="@integer/google_play_services_version"
+                        android:rotation="-180"
+                        app:siShape="@raw/like" />
+                    <!--android:rotation="180"-->
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="싫어요"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/po_image3"
-                        android:textSize="20sp"/>
                 </RelativeLayout>
 
             </RelativeLayout>

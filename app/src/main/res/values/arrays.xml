@@ -7,6 +7,7 @@
     </string-array>
 
     <string-array name="plan_info">
+        <item> </item>
         <item>Band 데이터 퍼펙트S</item>
         <item>Band 데이터 퍼펙트</item>
         <item>Band 3.2G</item>
@@ -16,6 +17,7 @@
     </string-array>
 
     <string-array name="phone_info">
+        <item> </item>
         <item>iPhone X</item>
         <item>iPhone 8</item>
         <item>Galaxy S8</item>

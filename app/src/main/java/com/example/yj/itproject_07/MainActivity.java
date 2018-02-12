@@ -276,11 +276,27 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
         // 버튼 클릭 리스너
-        ShineButton shineButton = findViewById(R.id.po_image2);
+        final ShineButton shineButton = findViewById(R.id.po_image2);
         shineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               mGotoJoinSKT(view);
+                JoinSKTActivity.re_flag = true;
+                mGotoJoinSKT(view);
+                // 색깔 빠지게
+                //shineButton.setCancel();
+
+            }
+        });
+
+        ShineButton shineButton2 = findViewById(R.id.po_image3);
+        shineButton.setShineTurnAngle(180);
+        shineButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JoinSKTActivity.re_flag = false;
+                Intent i = new Intent(MainActivity.this, JoinSKTActivity.class);
+                startActivity(i);
+                //finish();
             }
         });
 

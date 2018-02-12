@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -71,11 +72,15 @@ public class CameraActivity extends AppCompatActivity {
 
     private void requestPermission()
     {
-        // 권한받기
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.CAMERA},200);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // 권한받기
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA}, 200);
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +98,10 @@ public class CameraActivity extends AppCompatActivity {
 
 
 
-        requestPermission();
+       requestPermission();
         mPreview = findViewById(R.id.preview_camera);
         cameraOverlay = findViewById(R.id.faceOverlay_camera);
-        int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if(rc == PackageManager.PERMISSION_GRANTED)
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
         {
             createCameraSource();
         }

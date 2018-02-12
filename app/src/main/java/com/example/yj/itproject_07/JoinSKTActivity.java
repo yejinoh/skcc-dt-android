@@ -43,6 +43,7 @@ public class JoinSKTActivity extends Activity{
             id_number_editText, address_editText, account_editText, bank_editText;
     public static String phone_String, plan_String, gender_String, extra_service_String, join_type_String;
     public static boolean flag = false;
+    public static boolean re_flag = true;
     int signviewHight;
     int signviewWidth;
     LinearLayout linearLayout;
@@ -174,9 +175,15 @@ public class JoinSKTActivity extends Activity{
                 }
         );
 
-        SetRecommend(gender_spinner,gender_str,gender_String);
-        SetRecommend(plan_spinner,plan_str,plan_String);
-        SetRecommend(phone_spinner,phone_str,phone_String);
+        SetRecommend(gender_spinner, gender_str, gender_String);
+        if(re_flag) {
+            SetRecommend(plan_spinner, plan_str, plan_String);
+            SetRecommend(phone_spinner, phone_str, phone_String);
+        }
+        else{
+            plan_spinner.setSelection(0);
+            phone_spinner.setSelection(0);
+        }
 
         ImageButton button = findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener(){
@@ -198,7 +205,7 @@ public class JoinSKTActivity extends Activity{
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(JoinSKTActivity.this, main.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
         ImageButton button_back = findViewById(R.id.button2);
@@ -236,22 +243,26 @@ public class JoinSKTActivity extends Activity{
                 imm.hideSoftInputFromWindow(phone_spinner.getWindowToken(), 0);
             }
         });
-        if(getIntent().hasExtra("byteArray")) {
-            // ImageView imv= new ImageView(this);
+//        if(getIntent().hasExtra("byteArray")) {
+//
+//        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1) {
             bitmap = BitmapFactory.decodeByteArray(
-                    getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
+                    data.getByteArrayExtra("byteArray"), 0,
+                    data.getByteArrayExtra("byteArray").length);
             bitmap.setHasAlpha(true); // alpha값 생성
             bitmap = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
 
-            //params.width = bitmap.getWidth();
-           // params.height = bitmap.getHeight();
-            //signview.setLayoutParams(params);
             sign.setVisibility(View.INVISIBLE);
             signview.setImageBitmap(bitmap);
         }
     }
-
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
 

@@ -24,16 +24,16 @@
             android:id="@+id/eraserBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="380dp"
-            android:layout_marginBottom="3dp"
             android:src="@drawable/eraser" />
+
 
         <ImageView
             android:id="@+id/edit_exit"
             android:layout_width="50dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="0dp"
-            android:src="@drawable/button" />
+            android:src="@drawable/button"
+            android:visibility="visible" />
+
 
     </LinearLayout>
 

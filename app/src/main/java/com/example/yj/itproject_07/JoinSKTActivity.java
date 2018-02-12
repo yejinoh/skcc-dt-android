@@ -1,17 +1,25 @@
 package com.example.yj.itproject_07;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,16 +38,20 @@ import okhttp3.Response;
  * Created by YJ on 2018-02-09.
  */
 
-public class JoinSKTActivity extends AppCompatActivity{
+public class JoinSKTActivity extends Activity{
     private EditText name_editText, age_editText, phone_number_editText,
-            remain_editText, remain_month_editText, id_number_editText, address_editText,
-            account_editText, bank_editText;
-
-    private FloatingActionButton fab;
-    private View view;
-
-    public static String phone_String, plan_String, gender_String, extra_service_String;
+            id_number_editText, address_editText, account_editText, bank_editText;
+    public static String phone_String, plan_String, gender_String, extra_service_String, join_type_String;
     public static boolean flag = false;
+    int signviewHight;
+    int signviewWidth;
+    LinearLayout linearLayout;
+    InputMethodManager imm;
+    Bitmap bitmap;
+    public ImageView signview;
+    public TextView sign;
+
+    private FloatingActionButton fab1;
 
     private void SetRecommend(Spinner targetSpinner, String[] targetArray , String targetString){
         for(int i=0;i<targetArray.length;i++){
@@ -56,24 +68,24 @@ public class JoinSKTActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.joinskt);
+        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        String[] gender_str = getResources().getStringArray(R.array.gender_info);
+        ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , gender_str);
 
-        //view = getLayoutInflater().inflate(R.layout.activity_main, null, false);
-        fab = findViewById(R.id.fab1);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab1 = findViewById(R.id.fab1);
+        fab1.setOnClickListener(new View.OnClickListener(){
+
             @Override
-            public void onClick(View v) {
-                if(!flag) flag = true;
-                else flag = false;
+            public void onClick(View v){
+                if(flag == false)
+                    flag = true;
+                else
+                    flag = false;
 
-                System.out.println(flag);
                 MainActivity.fab.callOnClick();
             }
 
         });
-
-
-        String[] gender_str = getResources().getStringArray(R.array.gender_info);
-        ArrayAdapter<String> gender_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , gender_str);
 
         final Spinner gender_spinner = findViewById(R.id.spinner_gender);
         gender_spinner.setAdapter(gender_adapter);
@@ -127,6 +139,24 @@ public class JoinSKTActivity extends AppCompatActivity{
                 }
         );
 
+        String[] join_type_str = getResources().getStringArray(R.array.join_type_info);
+        ArrayAdapter<String> join_type_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , join_type_str);
+        final Spinner join_type_spinner = findViewById(R.id.spinner_join_type);
+        join_type_spinner.setAdapter(join_type_adapter);
+        join_type_spinner.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(join_type_spinner.getSelectedItemPosition() >= 0){
+                            join_type_String = parent.getItemAtPosition(position).toString();
+                            System.out.println(join_type_String);
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                }
+        );
+
         String[] extraService_str = getResources().getStringArray(R.array.extra_service_info);
         ArrayAdapter<String> extraService_adapter = new ArrayAdapter<String>(this, R.layout.spinneritem , extraService_str);
         final Spinner extraService_spinner = findViewById(R.id.spinner_extraService);
@@ -148,34 +178,93 @@ public class JoinSKTActivity extends AppCompatActivity{
         SetRecommend(plan_spinner,plan_str,plan_String);
         SetRecommend(phone_spinner,phone_str,phone_String);
 
-        Button button = findViewById(R.id.button1);
+        ImageButton button = findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 try {
                     // 가입 정보 서버로 보낸다.
                     postToServer("http://169.56.93.18:8080/user/join", MakeInfoJson());
-
-
-
                 }catch (IOException e){
                     e.printStackTrace();
                 }
-                //new JSONTask().execute("http://169.56.93.18:8080/user/join");
             }
         });
+
+        sign = findViewById(R.id.signtext);
+        signview = findViewById(R.id.signview);
+        signview.buildDrawingCache();
+        signview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(JoinSKTActivity.this, main.class);
+                startActivity(intent);
+            }
+        });
+        ImageButton button_back = findViewById(R.id.button2);
+        button_back.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                finish();
+            }
+        });
+
         name_editText = findViewById(R.id.name_editText);
         age_editText = findViewById(R.id.age_editText);
         phone_number_editText = findViewById(R.id.phone_Number_editText);
-        remain_editText = findViewById(R.id.remain_editText);
-        remain_month_editText = findViewById(R.id.remiain_month_editText);
         id_number_editText = findViewById(R.id.id_number_editText);
         address_editText = findViewById(R.id.address_editText);
         account_editText = findViewById(R.id.account_editText);
         bank_editText = findViewById(R.id.bank_editText);
+        //LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)signview.getLayoutParams();
+
+        linearLayout = findViewById(R.id.linearlayout1);
+        linearLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(name_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(age_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(phone_number_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(id_number_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(address_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(account_editText.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(extraService_spinner.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(gender_spinner.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(plan_spinner.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(join_type_spinner.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(phone_spinner.getWindowToken(), 0);
+            }
+        });
+        if(getIntent().hasExtra("byteArray")) {
+            // ImageView imv= new ImageView(this);
+
+            bitmap = BitmapFactory.decodeByteArray(
+                    getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
+            bitmap.setHasAlpha(true); // alpha값 생성
+            bitmap = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+
+            //params.width = bitmap.getWidth();
+           // params.height = bitmap.getHeight();
+            //signview.setLayoutParams(params);
+            sign.setVisibility(View.INVISIBLE);
+            signview.setImageBitmap(bitmap);
+        }
     }
 
-    
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        View signview = this.findViewById(R.id.signview);
+
+        signviewWidth = signview.getWidth();
+        signviewHight = signview.getHeight();
+
+        Log.w("Layout Width - ", String.valueOf(signview.getWidth()));
+        Log.w("Layout Height - ", String.valueOf(signview.getHeight()));
+    }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
@@ -199,8 +288,8 @@ public class JoinSKTActivity extends AppCompatActivity{
             jsonObject.put("phone_number", phone_number_editText.getText().toString());
             jsonObject.put("plan", plan_String);
             jsonObject.put("phone", phone_String);
-            jsonObject.put("remain", remain_editText.getText().toString());
-            jsonObject.put("remain_month", remain_month_editText.getText().toString());
+            //jsonObject.put("remain", remain_editText.getText().toString());
+            //jsonObject.put("remain_month", remain_month_editText.getText().toString());
             jsonObject.put("id_number", id_number_editText.getText().toString());
             jsonObject.put("address", address_editText.getText().toString());
             jsonObject.put("account", account_editText.getText().toString());

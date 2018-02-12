@@ -28,6 +28,7 @@
     </string-array>
 
     <string-array name="extra_service_info">
+        <item>선택 안함</item>
         <item>폰세이프IV R Plan 프리미엄</item>
         <item>LTE 안심옵션</item>
         <item>T안심콜</item>
@@ -35,4 +36,9 @@
         <item>지하철 프리</item>
     </string-array>
 
+    <string-array name="join_type_info">
+        <item>신규 가입</item>
+        <item>번호 이동</item>
+        <item>기기 변경</item>
+    </string-array>
 </resources>

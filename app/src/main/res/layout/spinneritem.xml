@@ -7,5 +7,6 @@
     android:paddingBottom="5dp"
     android:paddingTop="5dp"
     android:textAlignment="gravity"
-    android:textColor="@color/colorPrimaryDark"
-    android:textSize="36sp" />
+    android:textColor="@color/heavy_gray"
+    android:textSize="16sp"
+    android:textStyle="bold"/>

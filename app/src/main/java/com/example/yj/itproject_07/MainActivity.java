@@ -563,7 +563,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private RecognizeOptions getRecognizeOptions() {
         return new RecognizeOptions.Builder().contentType(ContentType.OPUS.toString())
-                .model("ko-KR_NarrowbandModel").interimResults(true).inactivityTimeout(2000).build();
+                .model("ko-KR_BroadbandModel").interimResults(true).inactivityTimeout(2000).build();
     }
 
     private void showError(final Exception e) {
@@ -595,7 +595,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             sttText = JoinSKTActivity.phone_String + " " + sttText;
                         }
                     }
-                    else if(sttText.contains("부가") || sttText.contains("보안")){
+                    else if(sttText.contains("부가") || sttText.contains("보안") || sttText.contains("서비스")){
                         if(!JoinSKTActivity.flag)
                             sttText = GetRecommendData("plan",planPosition,"name") + " " + sttText;
                         else {

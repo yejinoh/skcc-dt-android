@@ -108,8 +108,9 @@ public class main extends Activity {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
             board.mBitmap.compress(Bitmap.CompressFormat.PNG, 100, bs);
             intent.putExtra("byteArray", bs.toByteArray());
-            startActivity(intent);
-
+            setResult(RESULT_OK, intent);
+//            startActivity(intent);
+            finish();
         }
 
     };

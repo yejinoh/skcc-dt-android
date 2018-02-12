@@ -1,13 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/dtedit">
 
     <LinearLayout
-
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,23 +14,25 @@
 
 
         <ImageView
-            android:id="@+id/eraserBtn"
-            android:layout_width="50dp"
-            android:layout_height="48dp"
-            android:src="@drawable/eraser" />
-
-        <ImageView
             android:id="@+id/dtlogo"
             android:layout_width="50dp"
-            android:layout_height="48dp"
-            android:layout_marginLeft="40dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/dtwhite" />
+
+        <ImageView
+            android:id="@+id/eraserBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="380dp"
+            android:layout_marginBottom="3dp"
+            android:src="@drawable/eraser" />
 
         <ImageView
             android:id="@+id/edit_exit"
             android:layout_width="50dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="280dp"
+            android:layout_marginLeft="0dp"
             android:src="@drawable/button" />
 
     </LinearLayout>
